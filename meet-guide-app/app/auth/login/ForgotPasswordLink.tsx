@@ -1,24 +1,15 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 
 const ForgotPasswordLink: React.FC = () => {
-  const handleForgotPassword = () => {
-    // Handle forgot password logic
-    console.log("Forgot password clicked");
-  };
-
   return (
-    <button
-      type="button"
-      onClick={handleForgotPassword}
-      className="flex justify-center items-center px-0 pt-px pb-0.5 h-5 w-[120px] max-sm:w-full"
+    <Link
+      href="/auth/forgot-password"
+      className="text-sm font-medium text-[#4c46b6] hover:underline focus:outline-none focus:ring-2 focus:ring-[#4c46b6] focus:ring-offset-2 rounded"
     >
-      <span className="flex flex-col shrink-0 justify-center text-sm font-medium leading-5 text-center text-indigo-800 cursor-pointer h-[17px] w-[120px]">
-        <span className="text-sm font-medium text-indigo-800">
-          Forgot password?
-        </span>
-      </span>
-    </button>
+      Forgot password?
+    </Link>
   );
 };
 

@@ -14,28 +14,24 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-1 justify-center items-center px-96 py-72 w-full h-screen bg-gray-50 max-md:px-5 max-md:py-10 max-md:w-full max-sm:px-4 max-sm:py-5">
-      <div className="relative shrink-0 h-[502px] w-[669px] max-md:static max-md:mx-auto max-md:my-0 max-md:w-full max-md:text-center max-md:max-w-[500px] max-sm:w-full max-sm:max-w-[400px]">
-        <header className="flex absolute top-0 left-0 flex-col justify-center text-4xl font-black tracking-tighter leading-10 h-[45px] text-blue-950 w-[253px]">
-          <h1 className="text-4xl font-black text-blue-950 max-sm:text-3xl max-sm:leading-9">
+    <section className="flex flex-1 justify-center items-center w-full h-screen bg-gray-50 px-8">
+      <div className="w-full max-w-[400px] flex flex-col gap-8">
+        {/* Header */}
+        <div className="flex flex-col">
+          <h1 className="text-4xl font-black text-[#142241]">
             Welcome Back
           </h1>
-        </header>
-
-        <p className="flex absolute left-0 flex-col justify-center h-6 text-base leading-6 text-gray-500 top-[53px] w-[257px]">
-          <span className="text-base text-gray-500">
+          <p className="text-base text-gray-500">
             Log in to your MeetGuide account
-          </span>
-        </p>
+          </p>
+        </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="absolute left-0 h-[325px] top-[109px] w-[669px] max-sm:w-full"
-        >
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <EmailInput />
           <PasswordInput />
 
-          <div className="flex absolute top-56 justify-between items-center w-[669px] max-sm:w-full">
+          <div className="flex justify-between items-center">
             <RememberMeCheckbox />
             <ForgotPasswordLink />
           </div>
