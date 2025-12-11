@@ -59,10 +59,10 @@ export default function LoginForm() {
         </div>
 
         {/* Submit button */}
-        <div className="box-border flex relative items-start px-4 py-3 max-w-full w-[464px] max-sm:w-full max-sm:max-w-full">
+        <div className="box-border flex relative items-start px-4 py-3 max-w-full ">
           <button
             type="submit"
-            className="flex relative justify-center items-center px-4 py-0 h-10 bg-blue-700 rounded-lg cursor-pointer border-[none] flex-[1_0_0] max-w-[480px] min-w-[84px]"
+            className="flex relative justify-center items-center px-4 py-0 h-10 bg-blue-600 rounded-lg cursor-pointer border-[none] flex-[1_0_0] max-w-[480px] min-w-[84px]"
           >
             <div className="flex relative flex-col items-center">
               <span className="overflow-hidden text-sm font-bold leading-5 text-center text-white text-ellipsis">
