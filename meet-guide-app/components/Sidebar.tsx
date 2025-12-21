@@ -1,68 +1,73 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { LayoutDashboard, Video, Settings, LogOut } from "lucide-react";
+import React from 'react';
+import { LayoutDashboard, Video, Settings, LogOut } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Sidebar = () => {
   const pathname = usePathname();
 
-  const navItems = [
+  const menuItems = [
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      name: 'Dashboard',
       icon: LayoutDashboard,
+      href: '/dashboard',
+      active: pathname === '/dashboard'
     },
     {
-      label: "Meetings",
-      href: "/meetings",
+      name: 'Meetings',
       icon: Video,
+      href: '/meetings',
+      active: pathname === '/meetings' || pathname.startsWith('/meetings/')
     },
     {
-      label: "Settings",
-      href: "/settings",
+      name: 'Settings',
       icon: Settings,
-    },
+      href: '/settings',
+      active: pathname === '/settings'
+    }
   ];
 
   return (
-    <div className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col justify-between p-6">
-      <div>
-        <div className="mb-10">
-          <h1 className="text-xl font-bold text-gray-800">MeetGuide</h1>
-        </div>
+    <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen">
+      {/* Logo */}
+      <div className="p-6 border-b border-gray-200">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center">
+            <Video className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-semibold text-gray-900">MeetGuide</span>
+        </Link>
+      </div>
 
-        <nav className="space-y-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
+      {/* Navigation */}
+      <nav className="flex-1 p-4">
+        <div className="space-y-1">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
             return (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                  item.active
+                    ? 'bg-indigo-50 text-indigo-600'
+                    : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
-                <item.icon className="w-5 h-5" />
-                {item.label}
+                <Icon className="w-5 h-5" />
+                <span className="text-sm font-medium">{item.name}</span>
               </Link>
             );
           })}
-        </nav>
-      </div>
-
-      <div className="space-y-4">
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
-          Join Meeting
-        </button>
-
-        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-          <LogOut className="w-5 h-5" />
-          Logout
-        </button>
-      </div>
+          
+          <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+            <LogOut className="w-5 h-5" />
+            <span className="text-sm font-medium">Logout</span>
+          </button>
+        </div>
+      </nav>
     </div>
   );
 };
