@@ -54,7 +54,7 @@ const LegalLinks = () => (
 const LoginLink = () => (
   <p className="text-sm text-center text-slate-500">
     Already have an account?{" "}
-    <a href="/login" className="font-medium text-indigo-700 hover:text-indigo-800">
+    <a href="/auth/login" className="font-medium text-indigo-700 hover:text-indigo-800">
       Log in
     </a>
   </p>
