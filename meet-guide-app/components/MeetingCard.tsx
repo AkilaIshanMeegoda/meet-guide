@@ -14,7 +14,7 @@ const MeetingCard: React.FC<MeetingCardProps> = ({ title, description, image, hr
     return (
         <Link
             href={href}
-            className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col group"
+            className="bg-white rounded-md border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col group"
         >
             <div className="relative h-48 w-full overflow-hidden">
                 <Image
