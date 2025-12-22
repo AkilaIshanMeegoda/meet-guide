@@ -1,34 +1,40 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import MeetingCard from '@/components/MeetingCard';
 
-const MeetingDetailsPage = ({ params }: { params: { id: string } }) => {
-    const meetingTitle = "Project Kickoff - Q3";
+interface PageProps {
+    params: Promise<{ id: string }>;
+}
+
+const MeetingDetailsPage = ({ params }: PageProps) => {
+    const resolvedParams = React.use(params);
+    const id = resolvedParams.id;
 
     const cards = [
         {
             title: "Topic wise Intent Highlights",
             description: "Get AI-generated summaries and jump to important moments in your meeting with tagged highlights.",
             image: "/intent_highlights.png",
-            href: "/meetings/{id}/intent-highlights"
+            href: `/meetings/${id}/intent-highlights`
         },
         {
             title: "Action items",
-            description: "Automatically capture action items from your meeting transcripts so nothing gets missed and everything is clear at a glance.",
+            description: "Automatically capture action items from your meeting transcripts...",
             image: "/action_items.png",
             href: "#"
         },
         {
             title: "Pronunciation Coaching",
-            description: "Improve your clarity and confidence with real-time pronunciation feedback and personalized coaching.",
+            description: "Improve your clarity and confidence with real-time pronunciation feedback...",
             image: "/pronunciation_coaching.png",
-            href: "#"
+            href: `/meetings/${id}/professional-scores`
         },
         {
             title: "Meeting Effectiveness",
-            description: "Analyze meeting dynamics with an effectiveness score and receive AI-powered recommendations to run better meetings.",
+            description: "Analyze meeting dynamics with an effectiveness score...",
             image: "/meeting_effectiveness.png",
             href: "#"
         }
@@ -41,7 +47,7 @@ const MeetingDetailsPage = ({ params }: { params: { id: string } }) => {
                     All Meetings
                 </Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-gray-900 font-medium">{meetingTitle}</span>
+                <span className="text-gray-900 font-medium">{id}</span>
                 <ChevronRight className="w-4 h-4" />
                 <span className="text-gray-400">Details</span>
             </nav>
