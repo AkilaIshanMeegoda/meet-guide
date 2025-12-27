@@ -42,6 +42,25 @@ const Card = ({ meeting }: MeetingCardProps) => {
           {meeting.participants} Participants
         </p>
       </div>
+
+      {/* Score Badge */}
+      <div className="text-xs mr-4">
+        {meeting.score ? (
+          <span
+            className={`px-2 py-1 rounded-md ${
+              meeting.score >= 90
+                ? 'bg-green-100 text-green-700'
+                : meeting.score >= 75
+                ? 'bg-yellow-100 text-yellow-700'
+                : 'bg-red-100 text-red-600'
+            }`}
+          >
+            Score: {meeting.score}
+          </span>
+        ) : (
+          <span className="text-slate-400">Score: N/A</span>
+        )}
+      </div>
     </div>
   );
 };
