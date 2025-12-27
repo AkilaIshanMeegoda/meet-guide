@@ -61,6 +61,19 @@ const Card = ({ meeting }: MeetingCardProps) => {
           <span className="text-slate-400">Score: N/A</span>
         )}
       </div>
+
+      {/* Action Button */}
+      <Link href={`/meetings/${meeting.id}`}>
+        <button
+          className={`text-xs px-4 py-2 rounded-md ${
+            meeting.status === 'upcoming'
+              ? 'bg-indigo-600 text-white'
+              : 'bg-indigo-100 text-indigo-600'
+          }`}
+        >
+          {meeting.status === 'upcoming' ? 'Join Meeting' : 'View Details'}
+        </button>
+      </Link>
     </div>
   );
 };
