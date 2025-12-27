@@ -30,7 +30,7 @@ const meetings = [
     },
 ];
 
-const MeetingsPage = () => {
+export default function ManagementMeetingsPage() {
     return (
         <div className="max-w-4xl mx-auto">
             <div className="mb-8">
@@ -43,7 +43,7 @@ const MeetingsPage = () => {
                     {meetings.map((meeting) => (
                         <Link
                             key={meeting.id}
-                            href={`/meetings/${meeting.id}`}
+                            href={`/management/meetings/${meeting.id}`}
                             className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group"
                         >
                             <div className="flex items-center gap-4">
@@ -67,5 +67,3 @@ const MeetingsPage = () => {
         </div>
     );
 };
-
-export default MeetingsPage;

@@ -9,41 +9,23 @@ interface PageProps {
     params: Promise<{ id: string }>;
 }
 
-const MeetingDetailsPage = ({ params }: PageProps) => {
+export default function ManagementMeetingDetailsPage ({ params }: PageProps) {
     const resolvedParams = React.use(params);
     const id = resolvedParams.id;
 
     const cards = [
         {
-            title: "Topic wise Intent Highlights",
-            description: "Get AI-generated summaries and jump to important moments in your meeting with tagged highlights.",
-            image: "/intent_highlights.png",
-            href: `/meetings/${id}/intent-highlights`
-        },
-        {
-            title: "Action items",
-            description: "Automatically capture action items from your meeting transcripts...",
-            image: "/action_items.png",
-            href: "#"
-        },
-        {
-            title: "Pronunciation Coaching",
-            description: "Improve your clarity and confidence with real-time pronunciation feedback...",
-            image: "/pronunciation_coaching.png",
-            href: `/meetings/${id}/professional-scores`
-        },
-        {
-            title: "Meeting Effectiveness",
+            title: "Meeting Culture Analysis",
             description: "Analyze meeting dynamics with an effectiveness score...",
             image: "/meeting_effectiveness.png",
             href: "#"
-        }
+        },
     ];
 
     return (
         <div className="max-w-7xl mx-auto">
             <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-                <Link href="/meetings" className="hover:text-indigo-600 transition-colors">
+                <Link href="/management/meetings" className="hover:text-indigo-600 transition-colors">
                     All Meetings
                 </Link>
                 <ChevronRight className="w-4 h-4" />
@@ -68,5 +50,3 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
         </div>
     );
 };
-
-export default MeetingDetailsPage;
