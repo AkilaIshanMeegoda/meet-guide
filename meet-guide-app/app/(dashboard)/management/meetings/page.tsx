@@ -7,26 +7,8 @@ const meetings = [
     {
         id: '1',
         title: 'Project Kickoff - Q3',
-        date: '2023-10-25',
+        date: '2025-12-25',
         time: '10:00 AM',
-    },
-    {
-        id: '2',
-        title: 'Weekly Sync',
-        date: '2023-10-26',
-        time: '02:00 PM',
-    },
-    {
-        id: '3',
-        title: 'Design Review',
-        date: '2023-10-27',
-        time: '11:30 AM',
-    },
-    {
-        id: '4',
-        title: 'Client Presentation',
-        date: '2023-10-28',
-        time: '03:00 PM',
     },
 ];
 
