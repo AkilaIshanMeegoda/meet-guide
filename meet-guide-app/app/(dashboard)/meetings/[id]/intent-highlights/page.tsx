@@ -104,27 +104,27 @@ export default async function IntentHighlightsPage({ params }: PageProps) {
         {/* Breadcrumb + meta */}
         <div className="mb-4">
           <nav
-            className="text-xs font-medium text-slate-500"
+            className="text-sm font-medium text-slate-600"
             aria-label="Breadcrumb"
           >
             Meetings / {meeting.title} / Topic wise Intent Highlights
           </nav>
 
-          <div className="mt-4 flex flex-wrap items-center gap-6 text-xs font-medium text-slate-600">
+          <div className="mt-4 flex flex-wrap items-center gap-6 text-sm font-medium text-slate-600">
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px]">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[14px]">
                 ⏱
               </span>
               <span>{meeting.duration}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px]">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[14px]">
                 👥
               </span>
               <span>{meeting.participants} participants</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px]">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[14px]">
                 📅
               </span>
               <span>{meeting.date}</span>
@@ -156,7 +156,7 @@ export default async function IntentHighlightsPage({ params }: PageProps) {
           <h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 md:text-[26px]">
             Topic 1: Product Feature Prioritization
           </h2>
-          <p className="max-w-3xl text-sm leading-6 text-slate-500">
+          <p className="max-w-4xl  leading-6 text-base text-slate-500">
             This section summarizes discussions around prioritizing features for
             the upcoming Q4 release, specifically focusing on mobile
             optimization and an advanced analytics dashboard.
