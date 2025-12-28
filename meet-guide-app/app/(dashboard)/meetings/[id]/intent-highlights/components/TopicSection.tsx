@@ -14,7 +14,7 @@ const META: Record<
   string,
   { icon: React.ReactNode; color: string; accent: string }
 > = {
-  Decision: {
+  "Decision": {
     icon: (
       <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
     ),
@@ -26,7 +26,7 @@ const META: Record<
     color: "text-amber-700",
     accent: "border-amber-100",
   },
-  Concern: {
+  "Concern": {
     icon: (
       <span className="mr-1 inline-block h-2 w-2 rounded-full bg-red-500" />
     ),
@@ -48,7 +48,7 @@ export const TopicSection: React.FC<TopicSectionProps> = ({
   return (
     <section>
       <h3
-        className={`mb-3 flex items-center text-sm font-semibold ${meta.color}`}
+        className={`mb-3 flex items-center text-base md:text-lg font-semibold ${meta.color}`}
       >
         {meta.icon}
         <span>{title}</span>
@@ -58,13 +58,13 @@ export const TopicSection: React.FC<TopicSectionProps> = ({
         {conversations.map((item, idx) => (
           <div
             key={idx}
-            className={`flex items-stretch gap-4 rounded-xl bg-white px-4 py-2 text-sm text-slate-700 shadow-sm border ${meta.accent}`}
+            className={`flex items-stretch gap-4 rounded-xl bg-white px-4 py-2 text-base text-slate-800 shadow-sm border ${meta.accent}`}
           >
-            <span className="mt-0.5 w-14 text-[11px] font-mono text-slate-400">
+            <span className="mt-0.5 w-14 text-xs font-mono text-slate-500">
               {item.timestamp}
             </span>
             <div className="flex-1">
-              <p>{item.content}</p>
+              <p className="leading-6">{item.content}</p>
             </div>
           </div>
         ))}
