@@ -70,11 +70,7 @@ const actionItemConversations: Conversation[] = [
     content:
       "“Lisa, can you conduct a user research survey for mobile features by Friday?”",
   },
-  {
-    timestamp: "03:45",
-    content:
-      "“We’ll move forward with the advanced analytics dashboard as our second priority.”",
-  },
+  
 ];
 
 const concernConversations: Conversation[] = [
