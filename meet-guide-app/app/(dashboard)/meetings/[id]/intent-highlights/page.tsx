@@ -100,7 +100,7 @@ export default async function IntentHighlightsPage({ params }: PageProps) {
 
   return (
     <div className="min-h-full bg-[#f7f8fc]">
-      <div className="mx-auto max-w-5xl py-6">
+      <div className="mx-auto max-w-7xl py-6">
         {/* Breadcrumb + meta */}
         <div className="mb-4">
           <nav
@@ -153,7 +153,7 @@ export default async function IntentHighlightsPage({ params }: PageProps) {
 
         {/* Topic header */}
         <div className="mb-8">
-          <h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 md:text-[32px]">
+          <h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 md:text-[26px]">
             Topic 1: Product Feature Prioritization
           </h2>
           <p className="max-w-3xl text-sm leading-6 text-slate-500">
