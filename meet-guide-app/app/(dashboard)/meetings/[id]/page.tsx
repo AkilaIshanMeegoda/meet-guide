@@ -15,14 +15,14 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
 
     const cards = [
         {
-            title: "Topic wise Intent Highlights",
-            description: "Get AI-generated summaries and jump to important moments in your meeting with tagged highlights.",
+            title: "Topic wise Intent Highlights and action items",
+            description: "AI-powered summaries of key moments and action items from meeting transcripts, ensuring nothing is missed and everything is clear at a glance.",
             image: "/intent_highlights.png",
             href: `/meetings/${id}/intent-highlights`
         },
         {
-            title: "Action items",
-            description: "Automatically capture action items from your meeting transcripts...",
+            title: "Professional Score",
+            description: "Elevate your communication professionalism with AI-driven insights",
             image: "/action_items.png",
             href: "#"
         },
