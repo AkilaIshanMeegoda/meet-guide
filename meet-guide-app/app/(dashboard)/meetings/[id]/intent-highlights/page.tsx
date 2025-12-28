@@ -70,11 +70,7 @@ const actionItemConversations: Conversation[] = [
     content:
       "“Lisa, can you conduct a user research survey for mobile features by Friday?”",
   },
-  {
-    timestamp: "03:45",
-    content:
-      "“We’ll move forward with the advanced analytics dashboard as our second priority.”",
-  },
+  
 ];
 
 const concernConversations: Conversation[] = [
@@ -100,31 +96,31 @@ export default async function IntentHighlightsPage({ params }: PageProps) {
 
   return (
     <div className="min-h-full bg-[#f7f8fc]">
-      <div className="mx-auto max-w-5xl py-6">
+      <div className="mx-auto max-w-7xl py-6">
         {/* Breadcrumb + meta */}
         <div className="mb-4">
           <nav
-            className="text-xs font-medium text-slate-500"
+            className="text-sm font-medium text-slate-600"
             aria-label="Breadcrumb"
           >
             Meetings / {meeting.title} / Topic wise Intent Highlights
           </nav>
 
-          <div className="mt-4 flex flex-wrap items-center gap-6 text-xs font-medium text-slate-600">
+          <div className="mt-4 flex flex-wrap items-center gap-6 text-sm font-medium text-slate-600">
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px]">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[14px]">
                 ⏱
               </span>
               <span>{meeting.duration}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px]">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[14px]">
                 👥
               </span>
               <span>{meeting.participants} participants</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[11px]">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[14px]">
                 📅
               </span>
               <span>{meeting.date}</span>
@@ -153,10 +149,10 @@ export default async function IntentHighlightsPage({ params }: PageProps) {
 
         {/* Topic header */}
         <div className="mb-8">
-          <h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 md:text-[32px]">
+          <h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 md:text-[26px]">
             Topic 1: Product Feature Prioritization
           </h2>
-          <p className="max-w-3xl text-sm leading-6 text-slate-500">
+          <p className="max-w-4xl  leading-6 text-base text-slate-500">
             This section summarizes discussions around prioritizing features for
             the upcoming Q4 release, specifically focusing on mobile
             optimization and an advanced analytics dashboard.

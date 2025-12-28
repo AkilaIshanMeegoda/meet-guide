@@ -16,7 +16,7 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
     const cards = [
         {
             title: "Topic wise Intent Highlights",
-            description: "Get AI-generated summaries and jump to important moments in your meeting with tagged highlights.",
+            description: "AI-powered summaries highlighting key moments... ",
             image: "/intent_highlights.png",
             href: `/meetings/${id}/intent-highlights`
         },
@@ -30,14 +30,20 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
             title: "Pronunciation Coaching",
             description: "Improve your clarity and confidence with real-time pronunciation feedback...",
             image: "/pronunciation_coaching.png",
-            href: `/meetings/${id}/professional-scores`
+            href: `#`
         },
         {
             title: "Meeting Effectiveness",
             description: "Analyze meeting dynamics with an effectiveness score...",
             image: "/meeting_effectiveness.png",
             href: "#"
-        }
+        },
+        {
+            title: "Professional Score",
+            description: "Elevate your communication professionalism with AI-driven insights",
+            image: "/intent_highlights.png",
+            href: "/meetings/${id}/professional-scores"
+        },
     ];
 
     return (
