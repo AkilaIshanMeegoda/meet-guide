@@ -1,4 +1,3 @@
-// components/MeetingCard.tsx
 import Link from 'next/link';
 
 interface MeetingCardProps {
@@ -65,7 +64,7 @@ const Card = ({ meeting }: MeetingCardProps) => {
       {/* Action Button */}
       <Link href={`/meetings/${meeting.id}`}>
         <button
-          className={`text-xs px-4 py-2 rounded-md ${
+          className={`text-xs px-4 py-2 rounded-md cursor-pointer ${
             meeting.status === 'upcoming'
               ? 'bg-indigo-600 text-white'
               : 'bg-indigo-100 text-indigo-600'
