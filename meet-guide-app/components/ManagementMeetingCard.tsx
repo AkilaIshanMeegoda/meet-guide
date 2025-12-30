@@ -8,14 +8,13 @@ interface MeetingCardProps {
     time: string;
     duration: string;
     participants: number;
-    score: number | null;
     flags: number;
     status: 'upcoming' | 'past';
     bgColor: string;
   };
 }
 
-const Card = ({ meeting }: MeetingCardProps) => {
+const ManagementMeetingCard = ({ meeting }: MeetingCardProps) => {
   return (
     <div className="flex items-center bg-white rounded-lg shadow-sm p-4 gap-4">
       {/* Meeting Icon */}
@@ -42,27 +41,8 @@ const Card = ({ meeting }: MeetingCardProps) => {
         </p>
       </div>
 
-      {/* Score Badge */}
-      <div className="text-xs mr-4">
-        {meeting.score ? (
-          <span
-            className={`px-2 py-1 rounded-md ${
-              meeting.score >= 90
-                ? 'bg-green-100 text-green-700'
-                : meeting.score >= 75
-                ? 'bg-yellow-100 text-yellow-700'
-                : 'bg-red-100 text-red-600'
-            }`}
-          >
-            Score: {meeting.score}
-          </span>
-        ) : (
-          <span className="text-slate-400">Score: N/A</span>
-        )}
-      </div>
-
       {/* Action Button */}
-      <Link href={`/meetings/${meeting.id}`}>
+      <Link href={`/management/meetings/${meeting.id}`}>
         <button
           className={`text-xs px-4 py-2 rounded-md cursor-pointer ${
             meeting.status === 'upcoming'
@@ -77,4 +57,4 @@ const Card = ({ meeting }: MeetingCardProps) => {
   );
 };
 
-export default Card;
+export default ManagementMeetingCard;

@@ -33,12 +33,6 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
             href: `#`
         },
         {
-            title: "Meeting Effectiveness",
-            description: "Analyze meeting dynamics with an effectiveness score...",
-            image: "/meeting_effectiveness.png",
-            href: "#"
-        },
-        {
             title: "Professional Score",
             description: "Elevate your communication professionalism with AI-driven insights",
             image: "/intent_highlights.png",
