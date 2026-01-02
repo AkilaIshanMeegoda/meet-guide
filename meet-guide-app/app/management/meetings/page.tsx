@@ -1,56 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import Card from '@/components/meetings/Card';
+import Card from '@/components/ManagementMeetingCard';
 
 const meetings = [
   {
     id: '1',
     title: 'Project Kickoff - Q3',
-    date: '2023-10-25',
+    date: '2025-10-25',
     time: '10:00 AM',
     duration: '45 min',
     participants: 8,
-    score: null,
     flags: 0,
-    status: 'upcoming' as const,
+    status: 'past' as const,
     bgColor: 'bg-orange-100'
-  },
-  {
-    id: '2',
-    title: 'Weekly Sync',
-    date: '2023-10-26',
-    time: '02:00 PM',
-    duration: '30 min',
-    participants: 5,
-    score: 92,
-    flags: 1,
-    status: 'past' as const,
-    bgColor: 'bg-emerald-100'
-  },
-  {
-    id: '3',
-    title: 'Design Review',
-    date: '2023-10-27',
-    time: '11:30 AM',
-    duration: '60 min',
-    participants: 3,
-    score: 68,
-    flags: 4,
-    status: 'past' as const,
-    bgColor: 'bg-red-100'
-  },
-  {
-    id: '4',
-    title: 'Client Presentation',
-    date: '2023-10-28',
-    time: '03:00 PM',
-    duration: '45 min',
-    participants: 6,
-    score: 85,
-    flags: 0,
-    status: 'upcoming' as const,
-    bgColor: 'bg-blue-100'
   },
 ];
 
