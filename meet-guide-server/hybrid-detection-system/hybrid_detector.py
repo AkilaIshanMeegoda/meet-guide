@@ -19,12 +19,18 @@ if not os.path.isdir(MODEL_PATH):
     raise FileNotFoundError(f"Model folder not found at {MODEL_PATH}")
 
 # -------------------------------------------------
-# 2. Load AI model (same as Colab)
+# 2. Load AI model
 # -------------------------------------------------
 device_index = 0 if torch.cuda.is_available() else -1
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, local_files_only=True)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH, local_files_only=True)
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_PATH,
+    local_files_only=True
+)
+model = AutoModelForSequenceClassification.from_pretrained(
+    MODEL_PATH,
+    local_files_only=True
+)
 
 clf = pipeline(
     "text-classification",
@@ -36,7 +42,7 @@ clf = pipeline(
 print("✅ Model loaded locally")
 
 # -------------------------------------------------
-# 3. Slang rules (IDENTICAL to Colab)
+# 3. Slang rules (UNCHANGED)
 # -------------------------------------------------
 SLANG_RULES = {
     "ambiguous": [
@@ -54,7 +60,7 @@ SLANG_RULES = {
 }
 
 # -------------------------------------------------
-# 4. Hybrid detector (SAME LOGIC AS COLAB)
+# 4. UPDATED Hybrid Detector (Lemma + Phrase)
 # -------------------------------------------------
 class RuleBase1_WithUncertainty:
     def __init__(self, ai_model, threshold=0.70):
@@ -64,45 +70,69 @@ class RuleBase1_WithUncertainty:
         self.nlp = spacy.load("en_core_web_sm")
         self.matcher = PhraseMatcher(self.nlp.vocab, attr="LOWER")
 
+        # Lemma-based slang sets
+        self.ambiguous_lemmas = set()
+        self.unambiguous_lemmas = set()
+
         self._load_rules()
 
     def _load_rules(self):
-        amb_docs = [self.nlp.make_doc(t) for t in SLANG_RULES["ambiguous"]]
-        unamb_docs = [self.nlp.make_doc(t) for t in SLANG_RULES["unambiguous"]]
+        # --- Multi-word unambiguous slang (PhraseMatcher) ---
+        multi_word_unamb = [
+            w for w in SLANG_RULES["unambiguous"] if " " in w
+        ]
+        patterns = [self.nlp.make_doc(w) for w in multi_word_unamb]
+        self.matcher.add("UNAMBIGUOUS_PHRASE", patterns)
 
-        self.matcher.add("UNAMBIGUOUS", unamb_docs)
-        self.matcher.add("AMBIGUOUS", amb_docs)
+        # --- Lemmatize single-word slang ---
+        for word in SLANG_RULES["ambiguous"]:
+            lemma = self.nlp(word)[0].lemma_.lower()
+            self.ambiguous_lemmas.add(lemma)
+
+        for word in SLANG_RULES["unambiguous"]:
+            if " " not in word:
+                lemma = self.nlp(word)[0].lemma_.lower()
+                self.unambiguous_lemmas.add(lemma)
 
     def analyze(self, sentence):
         doc = self.nlp(sentence)
+
+        # ---------- PHASE 1: UNAMBIGUOUS PHRASES ----------
         matches = self.matcher(doc)
+        for match_id, start, end in matches:
+            return {
+                "text": sentence,
+                "term": doc[start:end].text,
+                "is_slang": True,
+                "confidence": 1.0,
+                "method": "Rule-Based (Unambiguous Phrase)"
+            }
 
         ambiguous_terms = []
 
-        # ---------- PHASE 1: RULE-BASED ----------
-        for match_id, start, end in matches:
-            label = self.nlp.vocab.strings[match_id]
-            term = doc[start:end].text
+        # ---------- PHASE 2: LEMMA-BASED TOKEN CHECK ----------
+        for token in doc:
+            lemma = token.lemma_.lower()
 
-            if label == "UNAMBIGUOUS":
+            if lemma in self.unambiguous_lemmas:
                 return {
                     "text": sentence,
-                    "term": term,
+                    "term": token.text,
                     "is_slang": True,
                     "confidence": 1.0,
-                    "method": "Rule-Based (Unambiguous)"
+                    "method": "Rule-Based (Unambiguous Lemma)"
                 }
 
-            elif label == "AMBIGUOUS":
-                ambiguous_terms.append(term)
+            elif lemma in self.ambiguous_lemmas:
+                ambiguous_terms.append(token.text)
 
-        # ---------- PHASE 2: AI WITH SAFETY ----------
+        # ---------- PHASE 3: AI MODEL ----------
         if ambiguous_terms:
             result = self.ai_model(sentence)[0]
             label = result["label"]
             score = result["score"]
 
-            if (label == "LABEL_1" or label == "1") and score >= self.threshold:
+            if label == "LABEL_1" and score >= self.threshold:
                 return {
                     "text": sentence,
                     "term": ambiguous_terms[0],
@@ -119,7 +149,7 @@ class RuleBase1_WithUncertainty:
                     "method": "AI Model (Uncertain → Safe)"
                 }
 
-        # ---------- PHASE 3: CLEAN ----------
+        # ---------- PHASE 4: CLEAN ----------
         return {
             "text": sentence,
             "term": None,
@@ -128,13 +158,12 @@ class RuleBase1_WithUncertainty:
             "method": "Clean"
         }
 
-
 # -------------------------------------------------
-# 5. Create detector (same as Colab)
+# 5. Create detector
 # -------------------------------------------------
 hybrid_detector = RuleBase1_WithUncertainty(
     ai_model=clf,
     threshold=0.70
 )
 
-print("✅ Hybrid slang detector ready")
+print("✅ Hybrid slang detector with lemmatization ready")
