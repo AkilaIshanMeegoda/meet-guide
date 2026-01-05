@@ -1,7 +1,6 @@
 import React from "react";
 
 type Conversation = {
-  timestamp: string;
   content: string;
 };
 
@@ -60,9 +59,6 @@ export const TopicSection: React.FC<TopicSectionProps> = ({
             key={idx}
             className={`flex items-stretch gap-4 rounded-xl bg-white px-4 py-2 text-base text-slate-800 shadow-sm border ${meta.accent}`}
           >
-            <span className="mt-0.5 w-14 text-xs font-mono text-slate-500">
-              {item.timestamp}
-            </span>
             <div className="flex-1">
               <p className="leading-6">{item.content}</p>
             </div>
