@@ -9,16 +9,16 @@ interface PageProps {
     params: Promise<{ id: string }>;
 }
 
-export default function ManagementMeetingDetailsPage ({ params }: PageProps) {
+export default function ManagementMeetingDetailsPage({ params }: PageProps) {
     const resolvedParams = React.use(params);
     const id = resolvedParams.id;
 
     const cards = [
         {
             title: "Meeting Culture Analysis",
-            description: "Analyze meeting dynamics with an effectiveness score...",
+            description: "Analyze meeting dynamics and identify cultural issues...",
             image: "/meeting_effectiveness.png",
-            href: "#"
+            href: `/management/meetings/${id}/cultural-analysis`
         },
     ];
 

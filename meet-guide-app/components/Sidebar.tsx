@@ -7,25 +7,33 @@ import { usePathname } from 'next/navigation';
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const isManagementRoute = pathname.startsWith('/management/');
+  const basePath = isManagementRoute ? '/management' : '';
 
   const menuItems = [
     {
       name: 'Dashboard',
       icon: LayoutDashboard,
-      href: '/dashboard',
-      active: pathname === '/dashboard'
+      href: `${basePath}/dashboard`,
+      active: isManagementRoute 
+        ? pathname === '/management/dashboard'
+        : pathname === '/dashboard'
     },
     {
       name: 'Meetings',
       icon: Video,
-      href: '/meetings',
-      active: pathname === '/meetings' || pathname.startsWith('/meetings/')
+      href: `${basePath}/meetings`,
+      active: isManagementRoute
+        ? pathname === '/management/meetings' || pathname.startsWith('/management/meetings/')
+        : pathname === '/meetings' || pathname.startsWith('/meetings/')
     },
     {
       name: 'Settings',
       icon: Settings,
-      href: '/settings',
-      active: pathname === '/settings'
+      href: `${basePath}/settings`,
+      active: isManagementRoute
+        ? pathname === '/management/settings'
+        : pathname === '/settings'
     }
   ];
 
@@ -33,7 +41,7 @@ const Sidebar = () => {
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen">
       {/* Logo */}
       <div className="p-6 border-b border-gray-200">
-        <Link href="/dashboard" className="flex items-center gap-2">
+        <Link href={isManagementRoute ? '/management/dashboard' : '/dashboard'} className="flex items-center gap-2">
           <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center">
             <Video className="w-5 h-5 text-white" />
           </div>
