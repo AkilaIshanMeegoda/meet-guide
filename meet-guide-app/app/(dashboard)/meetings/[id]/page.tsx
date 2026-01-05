@@ -24,7 +24,7 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
             title: "Action items",
             description: "Automatically capture action items from your meeting transcripts...",
             image: "/action_items.png",
-            href: "#"
+            href: `/meetings/${id}/action-items`
         },
         {
             title: "Pronunciation Coaching",
