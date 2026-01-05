@@ -153,7 +153,7 @@ const MeetGuideApp: React.FC = () => {
                       </div>
                       <div className="mt-2">
                         <span className={`px-2 py-1 rounded text-xs font-medium ${getPriorityColor(item.priority)}`}>
-                          {item.priority} {item.priority === 'High' ? 'pm 1:30' : ''}
+                          {item.priority}
                         </span>
                       </div>
                     </div>
