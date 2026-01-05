@@ -17,7 +17,6 @@ type StatCardData = {
 };
 
 type Conversation = {
-  timestamp: string;
   content: string;
 };
 
@@ -54,11 +53,11 @@ const statsData: StatCardData[] = [
 
 const decisionConversations: Conversation[] = [
   {
-    timestamp: "01:32",
+    
     content: "“Let’s prioritize mobile optimization for Q4 release.”",
   },
   {
-    timestamp: "03:45",
+    
     content:
       "“We’ll move forward with the advanced analytics dashboard as our second priority.”",
   },
@@ -66,7 +65,7 @@ const decisionConversations: Conversation[] = [
 
 const actionItemConversations: Conversation[] = [
   {
-    timestamp: "01:32",
+    
     content:
       "“Lisa, can you conduct a user research survey for mobile features by Friday?”",
   },
@@ -75,7 +74,7 @@ const actionItemConversations: Conversation[] = [
 
 const concernConversations: Conversation[] = [
   {
-    timestamp: "01:32",
+    
     content:
       "“I’m concerned about the lack of resources for this initiative.”",
   },
