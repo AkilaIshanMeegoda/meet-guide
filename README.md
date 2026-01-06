@@ -28,7 +28,7 @@ Multiple specialized AI systems for comprehensive meeting analysis:
 - **Meeting Summarization System** - Intent detection and action item extraction
 - **Mispronunciation Detection System** - Speech analysis and pronunciation feedback
 - **Cultural Analysis System** - Diversity and inclusion insights
-- **Hybrid Detection System** - Meeting format analysis (in-person/remote dynamics)
+- **Hybrid Detection System** - Detect genz slangs and give professional score
 
 ## Key Features
 
@@ -36,7 +36,7 @@ Multiple specialized AI systems for comprehensive meeting analysis:
 
 - **Action Item Tracking**: Never miss a commitment with AI-extracted tasks
 - **Pronunciation Feedback**: Improve communication with personalized insights
-- **Professional Scores**: Track your meeting participation and effectiveness
+- **Professional Scores**: Gives professional score base on genz slang usage
 - **Intent Highlights**: Quick summaries of key discussion points
 
 ### For Managers
@@ -105,7 +105,7 @@ cd meet-guide-server/cultural-analysis-system
 
 ```bash
 cd meet-guide-server/hybrid-detection-system
-python demo.py  # Test the hybrid meeting detector
+python demo.py
 ```
 
 ## Project Structure
@@ -313,8 +313,7 @@ uvicorn web_server:app --host 0.0.0.0 --port 8000
 
 | Date       | Branch         | Type  | Description                           |
 | ---------- | -------------- | ----- | ------------------------------------- |
-| 2026-01-05 | Initial Commit | Setup | Project structure initialized         |
-| -          | -              | -     | Future merges will be documented here |
+| 2025-12-02 | Initial Commit | Setup | Project structure initialized         |
 
 **Note**: Complete merge history is available in Git logs:
 
@@ -351,16 +350,3 @@ Proprietary - Meet Guide Platform © 2026
 ## Team
 
 Meet Guide Development Team
-
-## Support
-
-For technical support or questions:
-
-- Create an issue in the project repository
-- Contact the development team directly
-
----
-
-**Last Updated**: January 2026  
-**Version**: 0.1.0  
-**Status**: Active Development
