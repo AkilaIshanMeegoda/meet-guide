@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import ExportButton from "@/components/ExportButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -29,9 +30,12 @@ export default function CulturalAnalysisPage({ params }: PageProps) {
         <span className="text-gray-900 font-medium">Cultural Analysis</span>
       </div>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">
-        Meeting Cultural Analysis Overview
-      </h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">
+          Meeting Cultural Analysis Overview
+        </h1>
+        <ExportButton />
+      </div>
 
       <div className="space-y-8 text-gray-700">
         <section>
