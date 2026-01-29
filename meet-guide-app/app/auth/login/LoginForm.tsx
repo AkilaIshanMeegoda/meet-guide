@@ -1,7 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth } from "@/lib/auth";
+import React from "react";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import RememberMeCheckbox from "./RememberMeCheckbox";
@@ -10,31 +8,9 @@ import LoginButton from "./LoginButton";
 import SignUpPrompt from "./SignUpPrompt";
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const result = await auth.signIn(email, password);
-      
-      if (result.success && result.isSignedIn) {
-        // Login successful - redirect to dashboard
-        router.push("/dashboard");
-      } else {
-        setError(result.error || "Login failed. Please try again.");
-      }
-    } catch (err: any) {
-      setError(err.message || "An error occurred during login");
-    } finally {
-      setLoading(false);
-    }
+    // Handle form submission
   };
 
   return (
@@ -50,24 +26,17 @@ const LoginForm: React.FC = () => {
           </p>
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-            {error}
-          </div>
-        )}
-
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <EmailInput value={email} onChange={setEmail} />
-          <PasswordInput value={password} onChange={setPassword} />
+          <EmailInput />
+          <PasswordInput />
 
           <div className="flex justify-between items-center">
             <RememberMeCheckbox />
             <ForgotPasswordLink />
           </div>
 
-          <LoginButton loading={loading} />
+          <LoginButton />
         </form>
 
         <SignUpPrompt />
