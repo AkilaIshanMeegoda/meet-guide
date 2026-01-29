@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone', // Required for AWS Amplify deployment
+  // Note: 'standalone' is NOT needed for Amplify Gen 2 (it handles SSR automatically)
+  // Only use 'standalone' for Docker/self-hosted deployments
   /* config options here */
 };
 
