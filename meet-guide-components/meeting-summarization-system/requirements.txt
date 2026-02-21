@@ -6,3 +6,8 @@ dateparser
 python-Levenshtein
 fastapi
 uvicorn
+sentence-transformers
+bertopic
+scikit-learn
+pydantic
+pymongo
