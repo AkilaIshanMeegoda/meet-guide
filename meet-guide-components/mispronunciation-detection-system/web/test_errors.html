@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Errors Display</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .error-card { border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error-card.severe { background: #ffebee; }
+        .error-card.moderate { background: #fff3e0; }
+        .error-card.mild { background: #e8f5e9; }
+        .error-expected { font-weight: bold; color: green; }
+        .error-spoken { font-weight: bold; color: red; }
+        code { background: #f5f5f5; padding: 2px 5px; }
+    </style>
+</head>
+<body>
+    <h1>Test Pronunciation Errors</h1>
+    <div id="output"></div>
+    
+    <script>
+        async function test() {
+            const response = await fetch('/projectmeeting1/participant_transcripts/Chalana_mispronunciation.json');
+            const data = await response.json();
+            
+            console.log('Data structure:', data);
+            console.log('Errors array:', data.errors);
+            
+            const errors = data.errors || data.mispronounced_words || [];
+            
+            document.getElementById('output').innerHTML = `
+                <h2>Stats</h2>
+                <p>Total words: ${data.total_words || 0}</p>
+                <p>Errors detected: ${data.errors_detected || 0}</p>
+                <p>Accuracy: ${((data.accuracy || 0) * 100).toFixed(1)}%</p>
+                
+                <h2>Errors (${errors.length})</h2>
+                ${errors.map(error => `
+                    <div class="error-card ${error.severity}">
+                        <div>
+                            <span class="error-expected">${error.expected || error.word}</span>
+                            →
+                            <span class="error-spoken">${error.spoken || '?'}</span>
+                        </div>
+                        <div>Type: ${error.error_type}</div>
+                        <div>Severity: ${error.severity}</div>
+                        <div>Expected phonemes: <code>${error.phonemes?.expected?.join(' ') || ''}</code></div>
+                        <div>Spoken phonemes: <code>${error.phonemes?.spoken?.join(' ') || ''}</code></div>
+                    </div>
+                `).join('')}
+            `;
+        }
+        
+        test();
+    </script>
+</body>
+</html>

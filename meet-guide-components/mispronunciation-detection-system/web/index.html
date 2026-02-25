@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Pronunciation Analysis</title>
+    <link rel="stylesheet" href="./styles.css?v=20260105d">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-microphone-alt"></i> Meeting Pronunciation Analysis</h1>
+                <p class="subtitle">Analyze and improve pronunciation from meeting recordings</p>
+            </div>
+        </header>
+
+        <!-- Meeting Selector -->
+        <div class="meeting-selector">
+            <label for="meetingSelect"><i class="fas fa-folder-open"></i> Select Meeting:</label>
+            <select id="meetingSelect">
+                <option value="">-- Choose a meeting --</option>
+            </select>
+            <button id="loadMeetingBtn" class="btn btn-primary">
+                <i class="fas fa-sync-alt"></i> Load Meeting
+            </button>
+            <button id="refreshBtn" class="btn btn-secondary" title="Refresh meeting list">
+                <i class="fas fa-redo"></i>
+            </button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-section" id="summarySection" style="display: none;">
+            <h2><i class="fas fa-chart-bar"></i> Meeting Overview</h2>
+            <div class="summary-cards" id="summaryCards">
+                <!-- Cards will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Participant Tabs -->
+        <div class="participants-section" id="participantsSection" style="display: none;">
+            <h2><i class="fas fa-users"></i> Participants</h2>
+            <div class="participant-tabs" id="participantTabs">
+                <!-- Tabs will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content" id="mainContent" style="display: none;">
+            <!-- Participant Info -->
+            <div class="participant-info" id="participantInfo">
+                <div class="participant-header">
+                    <div class="participant-avatar" id="participantAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="participant-details">
+                        <h2 id="participantName">Select a Participant</h2>
+                        <div class="stats" id="participantStats">
+                            <!-- Stats will be populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs for Transcript -->
+            <div class="content-tabs">
+                <button class="content-tab active" data-tab="transcript">
+                    <i class="fas fa-file-alt"></i> Full Transcript
+                </button>
+                <button class="content-tab" data-tab="mispronounced">
+                    <i class="fas fa-exclamation-triangle"></i> Mispronounced Words
+                    <span class="tab-badge" id="mispronounceCount">0</span>
+                </button>
+            </div>
+
+            <!-- Transcript Panel -->
+            <div class="content-panel" id="transcriptPanel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-quote-left"></i> Full Transcript</h3>
+                    <span class="info-text">Click on highlighted words to see pronunciation details</span>
+                </div>
+                <div class="transcript-content" id="transcriptContent">
+                    <!-- Transcript will be populated by JS -->
+                </div>
+            </div>
+
+            <!-- Mispronounced Words Panel -->
+            <div class="content-panel hidden" id="mispronouncedPanel">
+                <div class="mispronounced-container">
+                    <!-- Left Side: Word List -->
+                    <div class="mispronounced-list-section">
+                        <div class="list-header">
+                            <h3><i class="fas fa-list"></i> Mispronounced Words</h3>
+                            <div class="filter-severity">
+                                <button class="severity-filter active" data-severity="all">All</button>
+                                <button class="severity-filter" data-severity="high">High</button>
+                                <button class="severity-filter" data-severity="medium">Medium</button>
+                                <button class="severity-filter" data-severity="low">Low</button>
+                            </div>
+                        </div>
+                        <div class="mispronounced-word-list" id="mispronouncedWordList">
+                            <!-- Word list will be populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Word Details -->
+                    <div class="mispronounced-detail-section" id="mispronouncedDetailSection">
+                        <div class="detail-placeholder" id="detailPlaceholder">
+                            <i class="fas fa-hand-pointer"></i>
+                            <p>Select a word from the list to see pronunciation details</p>
+                        </div>
+                        <div class="word-detail-card hidden" id="wordDetailCard">
+                            <div class="detail-card-header">
+                                <h3>Pronunciation Details</h3>
+                            </div>
+                            
+                            <div class="correct-pronunciation-box">
+                                <span class="pronunciation-label">CORRECT PRONUNCIATION</span>
+                                <div class="pronunciation-word-display" id="detailCorrectWord">exactly</div>
+                                <div class="phonemes-row">
+                                    <span class="phonemes-text" id="detailPhonemes">IH G Z AE K T L IY</span>
+                                    <button class="listen-btn-inline" id="detailListenBtn">
+                                        <i class="fas fa-volume-up"></i> Listen
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="error-info-table">
+                                <div class="error-info-row">
+                                    <span class="error-info-label">Error Type:</span>
+                                    <span class="error-info-value" id="detailErrorType">pronunciation</span>
+                                </div>
+                                <div class="error-info-row">
+                                    <span class="error-info-label">Severity:</span>
+                                    <span class="error-info-value" id="detailSeverity">mild</span>
+                                </div>
+                                <div class="error-info-row">
+                                    <span class="error-info-label">Accuracy:</span>
+                                    <span class="error-info-value" id="detailAccuracy">91.0%</span>
+                                </div>
+                                <div class="error-info-row">
+                                    <span class="error-info-label">Time in Audio:</span>
+                                    <span class="error-info-value" id="detailTime">53.78s - 54.28s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Word Detail Modal -->
+        <div class="modal" id="wordModal">
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <div class="modal-header">
+                    <h3>Pronunciation Details</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="word-comparison">
+                        <div class="word-box expected" style="flex: 1; max-width: 100%;">
+                            <label>Correct Pronunciation</label>
+                            <div class="word-display" id="expectedWord">-</div>
+                            <div class="phonemes" id="expectedPhonemes">-</div>
+                            <button class="play-btn" id="playExpected" title="Listen to correct pronunciation">
+                                <i class="fas fa-volume-up"></i> Listen
+                            </button>
+                        </div>
+                    </div>
+                    <div class="error-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Error Type:</span>
+                            <span class="detail-value" id="errorType">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Severity:</span>
+                            <span class="detail-value" id="errorSeverity">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Accuracy:</span>
+                            <span class="detail-value" id="errorAccuracy">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Time in Audio:</span>
+                            <span class="detail-value" id="errorTime">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading meeting data...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js?v=20260105d"></script>
+</body>
+</html>
