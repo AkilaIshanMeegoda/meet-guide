@@ -1,0 +1,32 @@
+{
+  "whisper": {
+    "model": "Whisper-small (base)",
+    "wer": 12.32876712328767,
+    "wer_details": {
+      "substitutions": 9,
+      "insertions": 4,
+      "deletions": 5,
+      "total_errors": 18,
+      "reference_words": 146,
+      "hypothesis_words": 145,
+      "wer_percent": 12.33
+    },
+    "processing_time": 29.68107795715332,
+    "transcript_preview": "All right. Thanks for hoping on this meeting everyone. I want to do a quick chicken and make sure we are all logged in on the other project is ahead of. That's fair and I appreciate you both keeping it real. It sounds like the review process is where things are getting a bit messy. I hear you. I don't want anyone burning out just to meet a deadline because that is not the move. Alright, then here's the plan. I will clean up the review schedule, set clear cheek points and make sure expectations a"
+  },
+  "wav2vec2": {
+    "model": "wav2vec2-base-960h",
+    "wer": 46.57534246575342,
+    "wer_details": {
+      "substitutions": 59,
+      "insertions": 6,
+      "deletions": 3,
+      "total_errors": 68,
+      "reference_words": 146,
+      "hypothesis_words": 149,
+      "wer_percent": 46.58
+    },
+    "processing_time": 12.099265813827515,
+    "transcript_preview": "E ER BE DAGS FOR HOPING ON THIS PAINTED EVRYAC I WON TO DO A QUICK CEKIN AND MAKE SURE WE AR ALL LOOKED IN ON WE OTHE PREJECTIES HEADED THAT'S FAIR AND I ABAPPROCIATE DUBOD I BIN IREAL IT SOUNDS LAKE THE REVEWPROSESS EASE WE ARE THINGS ARE GETTING A BE MITTING I HEAR YOU I DARN'T TARN'T ANY ONE BURNING OUT JUST TO MEET AT DECLINE BECAUSE THAT IS NOT THE MOOV ALL RIGHT THEN HERE'S THE PLAN I YWELL CLEAN UP THE REVEW SHUD YOU THITLY E G POINTS AND MINICURE EXPECATIONS ARE CHRISTALTI YO AND IF SOME"
+  }
+}
