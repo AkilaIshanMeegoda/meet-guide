@@ -121,6 +121,10 @@ def fetch_meeting_transcript(db, meeting_id):
             email = participant.get('email', '')
             
             if email:
+                # Map email to itself (for when speaker is already an email)
+                participant_emails[email] = email
+                participant_emails_lower[email.lower()] = email
+                
                 # Add username mappings (case-sensitive and case-insensitive)
                 if username:
                     participant_emails[username] = email
@@ -272,24 +276,34 @@ def save_action_items(db, meeting, action_items, participant_emails, participant
     for item in action_items:
         details = item.get('details') or {}
         
+        # Speaker is already an email in transcript - use as-is
+        speaker = item.get('speaker', 'Unknown')
+        assigned_by = speaker
+        assigned_by_email = speaker if '@' in speaker else ""
+        
         # Extract assignee and email with case-insensitive fallback
         assignee_name = details.get('who', 'Unassigned')
-        # Try exact match first, then case-insensitive
+        # Try exact match first, then case-insensitive (now includes email→email mapping)
         assignee_email = participant_emails.get(assignee_name) or \
-                        participant_emails_lower.get(assignee_name.lower(), assignee_name)
+                        participant_emails_lower.get(assignee_name.lower(), "")
         
         # Handle team/all assignees - assign to all participants
         assignee_emails = []
         assignee_lower = assignee_name.lower()
         if assignee_lower in ["team", "all", "team / all", "team/all", "everyone"]:
-            # Assign to all participants (get unique emails)
-            assignee_emails = list(set(participant_emails.values()))
+            # Assign to all participants (get unique emails - exclude email→email duplicates)
+            assignee_emails = list(set([e for e in participant_emails.values() if '@' in e]))
             assignee_name = "Team/All"
+            assignee_email = "team@all"  # Placeholder
         elif assignee_email and '@' in assignee_email:
-            # Single assignee with valid email
+            # Single assignee with valid email (found in mapping)
+            assignee_emails = [assignee_email]
+        elif '@' in assignee_name:
+            # Assignee name itself is an email - should have been mapped to itself
+            assignee_email = assignee_name
             assignee_emails = [assignee_email]
         else:
-            # No valid email found - skip this action item or log warning
+            # No valid email found - skip this action item
             print(f"   WARNING: No email found for assignee '{assignee_name}', skipping action item")
             continue
         
@@ -301,12 +315,14 @@ def save_action_items(db, meeting, action_items, participant_emails, participant
             'meeting_id': meeting_id,
             'meeting_title': meeting.get('title', meeting_id),
             'meeting_date': meeting.get('actual_start', meeting.get('created_at')),
-            'speaker': item['speaker'],
+            'speaker': speaker,
+            'assigned_by': assigned_by,
+            'assigned_by_email': assigned_by_email,
             'sentence': item['sentence'],
             'task': details.get('what', item['sentence']),
             'assignee': assignee_name,
             'assignee_email': assignee_email,
-            'assignee_emails': assignee_emails,  # New field for multiple assignees
+            'assignee_emails': assignee_emails,  # Primary field for filtering
             'deadline': details.get('when'),
             'deadline_date': None,  # Could parse deadline to date if needed
             'priority': item.get('priority', 'medium'),

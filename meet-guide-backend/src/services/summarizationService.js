@@ -223,6 +223,75 @@ async function saveMeetingSummarization(meeting, analysis, processingTime) {
 }
 
 /**
+ * Build participant email mapping from meeting participants
+ * Includes email→email self-mapping to prevent doubling when speakers are emails
+ * @param {Object} meeting - Meeting document with participants array
+ * @returns {Object} Map of names/emails to email addresses
+ */
+function buildParticipantEmailMap(meeting) {
+  const participantEmails = {};
+
+  if (!meeting.participants || meeting.participants.length === 0) {
+    return participantEmails;
+  }
+
+  for (const participant of meeting.participants) {
+    const email = participant.email;
+    const username = participant.username || "";
+    const full_name = participant.full_name || "";
+
+    if (email) {
+      // CRITICAL: Map email to itself (for when speaker is already an email)
+      participantEmails[email] = email;
+      participantEmails[email.toLowerCase()] = email;
+
+      // Map username to email
+      if (username) {
+        participantEmails[username] = email;
+        participantEmails[username.toLowerCase()] = email;
+
+        // Also add first name only
+        const firstName = username.includes(" ")
+          ? username.split(" ")[0]
+          : username;
+        participantEmails[firstName] = email;
+        participantEmails[firstName.toLowerCase()] = email;
+      }
+
+      // Map full_name to email
+      if (full_name) {
+        participantEmails[full_name] = email;
+        participantEmails[full_name.toLowerCase()] = email;
+
+        // Also add first name only
+        const firstName = full_name.includes(" ")
+          ? full_name.split(" ")[0]
+          : full_name;
+        participantEmails[firstName] = email;
+        participantEmails[firstName.toLowerCase()] = email;
+      }
+    }
+  }
+
+  // Also add from speaker_mapping if available
+  if (meeting.transcript && meeting.transcript.speaker_mapping) {
+    for (const [speakerName, userInfo] of Object.entries(
+      meeting.transcript.speaker_mapping,
+    )) {
+      if (userInfo && typeof userInfo === "object" && userInfo.email) {
+        participantEmails[speakerName] = userInfo.email;
+        participantEmails[speakerName.toLowerCase()] = userInfo.email;
+        // Also map the email to itself
+        participantEmails[userInfo.email] = userInfo.email;
+        participantEmails[userInfo.email.toLowerCase()] = userInfo.email;
+      }
+    }
+  }
+
+  return participantEmails;
+}
+
+/**
  * Save action items to MongoDB
  * @param {Object} meeting - Meeting document
  * @param {Array} actionItems - Action items from analysis
@@ -250,10 +319,58 @@ async function saveActionItems(
     // Get topic label from topic_id
     const topicLabel = topicLabelMap[item.topic_id] || "";
 
-    const speakerEmail =
-      participantEmails[speaker] ||
-      `${speaker.toLowerCase().replace(/\s+/g, ".")}@gmail.com`;
-    const assigneeEmail = participantEmails[assignee] || speakerEmail;
+    // Get speaker email - speaker is already an email in transcript, use as-is
+    let speakerEmail = participantEmails[speaker];
+    if (!speakerEmail) {
+      // If not in mapping, check if speaker itself is an email
+      if (speaker.includes("@")) {
+        speakerEmail = speaker; // Speaker is already an email
+      } else {
+        // Fallback: construct email from speaker name (avoid doubling!)
+        speakerEmail = `${speaker.toLowerCase().replace(/\s+/g, ".")}@gmail.com`;
+      }
+    }
+
+    // Get assignee email
+    let assigneeEmail =
+      participantEmails[assignee] || participantEmails[assignee.toLowerCase()];
+    if (!assigneeEmail) {
+      if (assignee.includes("@")) {
+        assigneeEmail = assignee; // Assignee is already an email
+      } else {
+        assigneeEmail = speakerEmail; // Default to speaker's email
+      }
+    }
+
+    // Build assignee_emails array
+    let assigneeEmails = [];
+    const assigneeLower = assignee.toLowerCase();
+
+    // Check for team/all assignments
+    if (
+      ["team", "all", "team / all", "team/all", "everyone"].includes(
+        assigneeLower,
+      )
+    ) {
+      // Get all unique participant emails
+      const allEmails = new Set();
+      if (meeting.participants) {
+        meeting.participants.forEach((p) => {
+          if (p.email) allEmails.add(p.email);
+        });
+      }
+      assigneeEmails = Array.from(allEmails);
+      assigneeEmail = "team@all"; // Placeholder
+    } else if (assigneeEmail && assigneeEmail.includes("@")) {
+      // Single assignee with valid email
+      assigneeEmails = [assigneeEmail];
+    } else {
+      // No valid email - skip this action item
+      console.warn(
+        `No valid email for assignee '${assignee}', skipping action item`,
+      );
+      continue;
+    }
 
     // Map priority values to schema enum
     const priorityMap = {
@@ -275,6 +392,7 @@ async function saveActionItems(
         assigned_by_email: speakerEmail,
         assignee: assignee,
         assignee_email: assigneeEmail,
+        assignee_emails: assigneeEmails, // Array for filtering
         deadline: deadline,
         deadline_date: deadline ? parsePythonDeadline(deadline) : null,
         priority: validPriority,
@@ -482,10 +600,13 @@ async function processMeetingSummarization(meetingId) {
             topicLabelMap[topic.topic_id] = topic.topic_label;
           });
 
+          // Build participant email mapping from meeting
+          const participantEmails = buildParticipantEmailMap(meeting);
+
           const savedActionItems = await saveActionItems(
             meeting,
             result.analysis.actionItems || [],
-            {},
+            participantEmails,
             topicLabelMap,
           );
           console.log(`   ✓ Saved ${savedActionItems.length} action items`);
@@ -526,4 +647,5 @@ module.exports = {
   checkServiceHealth,
   waitForSummarizationServer,
   processMeetingSummarization,
+  buildParticipantEmailMap,
 };

@@ -32,20 +32,6 @@ else:
 BASE_DIR = Path(__file__).parent
 SAMPLE_PATH = BASE_DIR / "sample_transcript.json"
 
-
-def serialize_datetime(obj):
-    """
-    Recursively convert datetime objects to ISO format strings in dictionaries and lists.
-    """
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    elif isinstance(obj, dict):
-        return {key: serialize_datetime(value) for key, value in obj.items()}
-    elif isinstance(obj, list):
-        return [serialize_datetime(item) for item in obj]
-    else:
-        return obj
-
 # MongoDB connection (lazy initialization)
 _db = None
 
@@ -156,15 +142,12 @@ async def analyze(body: TranscriptRequest):
         intent = r.get("intent")
         counts[intent] = counts.get(intent, 0) + 1
 
-    # Serialize response data to handle any datetime objects
-    response_data = {
-        "results": serialize_datetime(results),
-        "actionItems": serialize_datetime(action_items),
+    return JSONResponse({
+        "results": results,
+        "actionItems": action_items,  # Now sorted by deadline
         "intentCounts": counts,
-        "topics": serialize_datetime(final_topics),
-    }
-
-    return JSONResponse(response_data)
+        "topics": final_topics,
+    })
 
 
 class MeetingProcessRequest(BaseModel):
@@ -272,97 +255,6 @@ async def process_meeting(body: MeetingProcessRequest):
         action_items = [r for r in results if r.get("intent") == "action-item"]
         action_items = prioritize_action_items_by_deadline(action_items)
         
-        # Get meeting participants for assignee_emails enhancement
-        participants = meeting.get("participants", [])
-        participant_emails_map = {}  # name -> email mapping
-        participant_emails_list = []  # list of all emails
-        
-        # Extract participant emails and build name->email mapping
-        users_col = db['users']
-        for participant in participants:
-            user = None
-            if isinstance(participant, str):
-                # participant is a user ID
-                from bson.objectid import ObjectId as BsonObjectId
-                try:
-                    user = users_col.find_one({"_id": BsonObjectId(participant)})
-                except:
-                    pass
-            elif isinstance(participant, dict):
-                # participant is an object with email
-                if "email" in participant:
-                    user = participant
-            
-            if user:
-                email = user.get("email", "")
-                username = user.get("username", "")
-                full_name = user.get("full_name", "")
-                
-                if email:
-                    participant_emails_list.append(email)
-                    
-                    # Map various forms of name to email (case-insensitive)
-                    if username:
-                        participant_emails_map[username.lower()] = email
-                        # Also map first name
-                        first_name = username.split()[0] if ' ' in username else username
-                        participant_emails_map[first_name.lower()] = email
-                    
-                    if full_name:
-                        participant_emails_map[full_name.lower()] = email
-                        # Also map first name
-                        first_name = full_name.split()[0] if ' ' in full_name else full_name
-                        participant_emails_map[first_name.lower()] = email
-                    
-                    # Map email prefix (before @) to email
-                    email_prefix = email.split('@')[0]
-                    participant_emails_map[email_prefix.lower()] = email
-        
-        print(f"   Participant mapping: {participant_emails_map}")
-        
-        # Enhance action items with assignee_email and assignee_emails
-        enhanced_action_items = []
-        for item in action_items:
-            details = item.get("details", {})
-            assignee = details.get("who", "Unassigned")
-            assignee_email = ""
-            assignee_emails = []
-            
-            # Handle team/all assignees
-            assignee_lower = assignee.lower()
-            if assignee_lower in ["team", "all", "team / all", "team/all", "everyone"]:
-                assignee_emails = participant_emails_list
-                assignee = "Team/All"
-                assignee_email = "team@all"  # Placeholder
-            else:
-                # Try to find assignee email from mapping (case-insensitive)
-                assignee_email = participant_emails_map.get(assignee_lower, "")
-                
-                if assignee_email:
-                    assignee_emails = [assignee_email]
-                elif assignee and assignee != "Unassigned":
-                    # No match found - log warning and skip
-                    print(f"   WARNING: No email found for assignee '{assignee}', skipping action item")
-                    continue
-            
-            # Create enhanced item
-            meeting_date = meeting.get("actual_start", meeting.get("created_at"))
-            # Convert datetime to ISO string if it's a datetime object
-            if hasattr(meeting_date, 'isoformat'):
-                meeting_date = meeting_date.isoformat()
-            
-            enhanced_item = {
-                **item,
-                "assignee": assignee,
-                "assignee_email": assignee_email,
-                "assignee_emails": assignee_emails,
-                "task": details.get("what", item.get("sentence", "")),
-                "deadline": details.get("when"),
-                "meeting_title": meeting.get("title", ""),
-                "meeting_date": meeting_date,
-            }
-            enhanced_action_items.append(enhanced_item)
-        
         counts: Dict[str, int] = {}
         for r in results:
             intent = r.get("intent")
@@ -372,7 +264,7 @@ async def process_meeting(body: MeetingProcessRequest):
         update_data = {
             "summarization": {
                 "results": results,
-                "actionItems": enhanced_action_items,
+                "actionItems": action_items,
                 "intentCounts": counts,
                 "topics": final_topics,
                 "processedAt": datetime.utcnow()
@@ -389,26 +281,23 @@ async def process_meeting(body: MeetingProcessRequest):
         elapsed_ms = int((datetime.now() - start_time).total_seconds() * 1000)
         print(f"✅ Meeting {meeting_id} processed in {elapsed_ms}ms")
         
-        # Serialize all datetime objects before returning
-        response_data = {
+        return JSONResponse({
             "success": True,
             "meetingId": actual_meeting_id,
             "processingTime": elapsed_ms,
             "analysis": {
-                "results": serialize_datetime(results),
-                "actionItems": serialize_datetime(enhanced_action_items),
-                "topics": serialize_datetime(final_topics),
+                "results": results,
+                "actionItems": action_items,
+                "topics": final_topics,
                 "intentCounts": counts
             },
             "summary": {
-                "actionItems": len(enhanced_action_items),
+                "actionItems": len(action_items),
                 "totalResults": len(results),
                 "topics": len(final_topics),
                 "intentCounts": counts
             }
-        }
-        
-        return JSONResponse(response_data)
+        })
         
     except HTTPException:
         raise
