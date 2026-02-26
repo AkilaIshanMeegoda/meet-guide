@@ -325,5 +325,66 @@ def _build_empty_report(participant_info=None, meeting_info=None):
         },
     }
 
+# -------------------------------------------------
+# Quick test when running this file directly
+# -------------------------------------------------
+if __name__ == "__main__":
+    # Simulate detection results for one participant
+    sample_results = [
+        {"text": "Let's review the Q1 strategy plan.", "term": None, "is_slang": False, "confidence": 0.0, "method": "Clean"},
+        {"text": "I think we need to focus on customer retention.", "term": None, "is_slang": False, "confidence": 0.0, "method": "Clean"},
+        {"text": "The new dashboard design is fire.", "term": "fire", "is_slang": True, "confidence": 0.96, "method": "AI Model (High Confidence)"},
+        {"text": "We should prioritize the mobile experience.", "term": None, "is_slang": False, "confidence": 0.0, "method": "Clean"},
+        {"text": "No cap, the numbers look great this quarter.", "term": "no cap", "is_slang": True, "confidence": 1.0, "method": "Rule-Based (Unambiguous Phrase)"},
+        {"text": "I'll prepare the presentation for Friday.", "term": None, "is_slang": False, "confidence": 0.0, "method": "Clean"},
+        {"text": "That marketing approach is lowkey genius.", "term": "lowkey", "is_slang": True, "confidence": 1.0, "method": "Rule-Based (Unambiguous Lemma)"},
+        {"text": "We need to align our KPIs with the roadmap.", "term": None, "is_slang": False, "confidence": 0.0, "method": "Clean"},
+        {"text": "The competitor analysis looks solid.", "term": "solid", "is_slang": False, "confidence": 0.45, "method": "AI Model (Below Threshold → Safe)"},
+        {"text": "Let's circle back on the budget discussion.", "term": None, "is_slang": False, "confidence": 0.0, "method": "Clean"},
+    ]
 
+    participant = {"id": "P-2847", "name": "Alex Morrison"}
+    meeting = {
+        "id": "MTG-2026-02-06-0001",
+        "name": "Q1 Strategy Planning Session",
+        "date": "February 6, 2026",
+        "duration": "45 minutes"
+    }
+
+    report = calculate_professional_score(
+        detection_results=sample_results,
+        participant_info=participant,
+        meeting_info=meeting,
+        avg_utterances_per_participant=8  # Avg person said 8 sentences
+    )
+
+    # Pretty print the result
+    import json
+    print("\n" + "=" * 60)
+    print("  PROFESSIONAL SCORE REPORT")
+    print("=" * 60)
+    print(f"  Participant: {report['participant']['name']}")
+    print(f"  Meeting:     {report['meeting']['name']}")
+    print(f"  Score:       {report['professionalism']['score']}/100 ({report['professionalism']['label']})")
+    print("-" * 60)
+    print("  BREAKDOWN:")
+    breakdown = report['professionalism']['breakdown']
+    print(f"    Base Score:              {breakdown['baseScore']}")
+    print(f"    Slang Frequency Penalty: {breakdown['slangFrequencyPenalty']}")
+    print(f"    Slang Severity Penalty:  {breakdown['slangSeverityPenalty']}")
+    print(f"    Repetition Penalty:      {breakdown['repetitionPenalty']}")
+    print(f"    Confidence Penalty:      {breakdown['confidencePenalty']}")
+    print(f"    Engagement Bonus:        +{breakdown['engagementBonus']}")
+    print("-" * 60)
+    print(f"  Slang Usage: {report['slangUsage']['total']} instances ({report['slangUsage']['slangFrequencyPercent']}%)")
+    print(f"    Ambiguous:   {report['slangUsage']['ambiguous']}")
+    print(f"    Unambiguous: {report['slangUsage']['unambiguous']}")
+    print("-" * 60)
+    print("  FLAGGED SENTENCES:")
+    for inst in report['flaggedInstances']:
+        print(f"    #{inst['id']} \"{inst['sentence']}\"")
+        print(f"       Term: {inst['slangTerm']} | Type: {inst['type']} | Severity: {inst['severityWeight']} | Method: {inst['detectionMethod']}")
+    print("=" * 60)
+    print("\n  Full JSON:")
+    print(json.dumps(report, indent=2))
 
