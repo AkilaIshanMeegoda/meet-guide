@@ -35,11 +35,14 @@ function start() {
   console.log(`[SummarizationServer] Path: ${SUMMARIZATION_PATH}`);
   console.log(`[SummarizationServer] Port: ${SUMMARIZATION_PORT}`);
 
-  // Use full Python path on Windows
-  const pythonCmd =
-    process.platform === "win32"
-      ? process.env.PYTHON_PATH || "python"
-      : "python3";
+  // Use venv python if available, otherwise fall back to system python
+  const venvPython = path.join(SUMMARIZATION_PATH, "venv", "bin", "python3");
+  const fs = require("fs");
+  const pythonCmd = (() => {
+    if (process.env.PYTHON_PATH) return process.env.PYTHON_PATH;
+    if (process.platform !== "win32" && fs.existsSync(venvPython)) return venvPython;
+    return process.platform === "win32" ? "python" : "python3";
+  })();
 
   // Start uvicorn server
   const args = [
@@ -50,7 +53,6 @@ function start() {
     "0.0.0.0",
     "--port",
     String(SUMMARIZATION_PORT),
-    "--reload",
   ];
 
   serverProcess = spawn(pythonCmd, args, {
@@ -93,19 +95,15 @@ function start() {
 
   serverProcess.stderr.on("data", (data) => {
     const text = data.toString();
+    // Log all stderr output so startup and errors are visible
+    console.log("[SummarizationServer STDERR]", text.trim());
 
-    // Filter out common non-critical warnings
     if (
       text.includes("Uvicorn running") ||
-      text.includes("Started server process")
+      text.includes("Application startup complete")
     ) {
-      console.log("[SummarizationServer]", text.trim());
-    } else if (
-      text.includes("ERROR") ||
-      text.includes("Exception") ||
-      text.includes("Traceback")
-    ) {
-      console.error("[SummarizationServer] ERROR:", text.trim());
+      console.log("✅ [SummarizationServer] FastAPI server started successfully");
+      serverReady = true;
     }
   });
 
