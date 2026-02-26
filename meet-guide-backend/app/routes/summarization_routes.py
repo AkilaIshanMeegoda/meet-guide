@@ -133,54 +133,30 @@ async def get_action_items_for_meeting(
     """Get all action items for a meeting"""
     try:
         meetings_col = Database.get_collection("meetings")
-        summarizations_col = Database.get_collection("meetingsummarizations")
+        actionitems_col = Database.get_collection("actionitems")
         
         meeting = meetings_col.find_one({"meeting_id": meeting_id})
         
         if not meeting:
             raise HTTPException(status_code=404, detail="Meeting not found")
         
-        # Get summarization from separate collection
-        summarization = summarizations_col.find_one({"meeting_id": meeting_id})
+        # Get action items from actionitems collection
+        action_items = list(actionitems_col.find({"meeting_id": meeting_id}))
         
-        if not summarization:
-            raise HTTPException(status_code=404, detail="No summarization found for this meeting")
-        
-        # Get meeting participants
-        participants = meeting.get("participants", [])
-        participant_emails = []
-        
-        # Extract participant emails from the participants array
-        users_col = Database.get_collection("users")
-        for participant in participants:
-            if isinstance(participant, str):
-                # participant is a user ID
-                user = users_col.find_one({"_id": ObjectId(participant)})
-                if user:
-                    participant_emails.append(user.get("email"))
-            elif isinstance(participant, dict):
-                # participant is an object with email
-                participant_emails.append(participant.get("email"))
-        
-        results = summarization.get("results", [])
-        
-        # Filter action items
-        action_items = [r for r in results if r.get("intent") == "action-item"]
-        
-        # Enhance each action item with additional info and handle team/all assignees
+        # Enhance each action item
         enhanced_items = []
         for item in action_items:
-            # Get meeting date and convert to ISO string if it's a datetime
-            meeting_date = meeting.get("actual_start", meeting.get("created_at"))
-            if hasattr(meeting_date, 'isoformat'):
-                meeting_date = meeting_date.isoformat()
-            
             # Convert _id to string if it's an ObjectId
             item_id = item.get("_id")
             if item_id:
                 item_id = str(item_id)
             else:
                 item_id = str(ObjectId())
+            
+            # Get meeting date and convert to ISO string if it's a datetime
+            meeting_date = item.get("meeting_date")
+            if hasattr(meeting_date, 'isoformat'):
+                meeting_date = meeting_date.isoformat()
             
             enhanced_item = {
                 "_id": item_id,
@@ -192,22 +168,13 @@ async def get_action_items_for_meeting(
                 "deadline": item.get("deadline"),
                 "priority": item.get("priority", "medium"),
                 "status": item.get("status", "pending"),
-                "meeting_title": meeting.get("title", ""),
+                "meeting_title": item.get("meeting_title", meeting.get("title", "")),
                 "meeting_date": meeting_date,
-                "topic_label": item.get("topic_label", ""),
-                "meeting_id": meeting_id
+                "topic_label": item.get("topic", ""),
+                "meeting_id": meeting_id,
+                "assigned_by": item.get("assigned_by", ""),
+                "assigned_by_email": item.get("assigned_by_email", "")
             }
-            
-            # Handle team/all assignees - assign to all participants
-            assignee = enhanced_item["assignee"].lower()
-            if assignee in ["team", "all", "team/all", "everyone"]:
-                enhanced_item["assignee_emails"] = participant_emails
-                enhanced_item["assignee"] = "Team/All"
-            elif enhanced_item["assignee_email"]:
-                # Single assignee
-                enhanced_item["assignee_emails"] = [enhanced_item["assignee_email"]]
-            else:
-                enhanced_item["assignee_emails"] = []
             
             enhanced_items.append(enhanced_item)
         
@@ -241,53 +208,50 @@ async def get_action_items_for_user(
                 detail="You can only view your own action items"
             )
         
-        meetings_col = Database.get_collection("meetings")
+        actionitems_col = Database.get_collection("actionitems")
         
-        # Find all meetings with action items
-        meetings = list(meetings_col.find({
-            "summarization.results": {"$exists": True}
-        }))
+        # Build query - filter by assignee_emails array containing the user's email
+        query = {"assignee_emails": email}
         
-        user_action_items = []
+        # Add status filter if provided
+        if status:
+            query["status"] = status
         
-        for meeting in meetings:
-            summarization = meeting.get("summarization", {})
-            results = summarization.get("results", [])
+        # Get action items from actionitems collection
+        action_items = list(actionitems_col.find(query))
+        
+        # Enhance each action item
+        enhanced_items = []
+        for item in action_items:
+            # Convert _id to string if it's an ObjectId
+            item_id = item.get("_id")
+            if item_id:
+                item_id = str(item_id)
             
-            # Filter action items
-            action_items = [r for r in results if r.get("intent") == "action-item"]
+            # Get meeting date and convert to ISO string if it's a datetime
+            meeting_date = item.get("meeting_date")
+            if hasattr(meeting_date, 'isoformat'):
+                meeting_date = meeting_date.isoformat()
             
-            for item in action_items:
-                # Check if user is assigned
-                assignee_emails = item.get("assignee_emails", [item.get("assignee_email")])
-                
-                if email in assignee_emails or item.get("assignee_email") == email:
-                    # Filter by status if provided
-                    if status and item.get("status") != status:
-                        continue
-                    
-                    # Get meeting date and convert to ISO string if it's a datetime
-                    meeting_date = meeting.get("actual_start", meeting.get("created_at"))
-                    if hasattr(meeting_date, 'isoformat'):
-                        meeting_date = meeting_date.isoformat()
-                    
-                    enhanced_item = {
-                        "_id": item.get("_id", str(ObjectId())),
-                        "task": item.get("task", ""),
-                        "sentence": item.get("sentence", ""),
-                        "assignee": item.get("assignee", "Unassigned"),
-                        "assignee_email": item.get("assignee_email", ""),
-                        "assignee_emails": assignee_emails,
-                        "deadline": item.get("deadline"),
-                        "priority": item.get("priority", "medium"),
-                        "status": item.get("status", "pending"),
-                        "meeting_title": meeting.get("title", ""),
-                        "meeting_date": meeting_date,
-                        "topic_label": item.get("topic_label", ""),
-                        "meeting_id": meeting.get("meeting_id")
-                    }
-                    
-                    user_action_items.append(enhanced_item)
+            enhanced_item = {
+                "_id": item_id,
+                "task": item.get("task", ""),
+                "sentence": item.get("sentence", ""),
+                "assignee": item.get("assignee", "Unassigned"),
+                "assignee_email": item.get("assignee_email", ""),
+                "assignee_emails": item.get("assignee_emails", []),
+                "deadline": item.get("deadline"),
+                "priority": item.get("priority", "medium"),
+                "status": item.get("status", "pending"),
+                "meeting_title": item.get("meeting_title", ""),
+                "meeting_date": meeting_date,
+                "topic_label": item.get("topic", ""),
+                "meeting_id": item.get("meeting_id", ""),
+                "assigned_by": item.get("assigned_by", ""),
+                "assigned_by_email": item.get("assigned_by_email", "")
+            }
+            
+            enhanced_items.append(enhanced_item)
         
         return APIResponse(
             success=True,
@@ -295,8 +259,8 @@ async def get_action_items_for_user(
             data={
                 "user_email": email,
                 "status": status or "all",
-                "count": len(user_action_items),
-                "action_items": user_action_items
+                "count": len(enhanced_items),
+                "action_items": enhanced_items
             }
         )
     except HTTPException:
@@ -314,7 +278,7 @@ async def update_action_item(
     """Update an action item (status, priority, etc.)"""
     try:
         from bson import ObjectId
-        summarizations_col = Database.get_collection("meetingsummarizations")
+        actionitems_col = Database.get_collection("actionitems")
         
         # Convert item_id to ObjectId if needed
         try:
@@ -322,26 +286,14 @@ async def update_action_item(
         except:
             raise HTTPException(status_code=400, detail="Invalid item ID format")
         
-        # Find the summarization containing this action item
-        summarization = summarizations_col.find_one({
-            "results._id": object_item_id
-        })
-        
-        if not summarization:
-            raise HTTPException(status_code=404, detail="Action item not found")
-        
-        # Find the specific action item to check authorization
-        action_item = None
-        for item in summarization.get("results", []):
-            if item.get("_id") == object_item_id:
-                action_item = item
-                break
+        # Find the action item
+        action_item = actionitems_col.find_one({"_id": object_item_id})
         
         if not action_item:
-            raise HTTPException(status_code=404, detail="Action item not found in results")
+            raise HTTPException(status_code=404, detail="Action item not found")
         
         # Security: Users can only update their own action items unless they're management
-        assignee_emails = action_item.get("assignee_emails", [action_item.get("assignee_email")])
+        assignee_emails = action_item.get("assignee_emails", [])
         if current_user.email not in assignee_emails and current_user.role != "management":
             raise HTTPException(
                 status_code=403,
@@ -349,32 +301,24 @@ async def update_action_item(
             )
         
         # Build the update operations
-        update_fields = {}
-        for key, value in updates.items():
-            update_fields[f"results.$.{key}"] = value
-        update_fields["results.$.updated_at"] = datetime.utcnow()
+        update_fields = updates.copy()
+        update_fields["updated_at"] = datetime.utcnow()
         
-        # Update the specific action item in the results array
-        result = summarizations_col.update_one(
-            {
-                "_id": summarization["_id"],
-                "results._id": object_item_id
-            },
-            {
-                "$set": update_fields
-            }
+        # Update the action item
+        result = actionitems_col.update_one(
+            {"_id": object_item_id},
+            {"$set": update_fields}
         )
         
         if result.modified_count == 0:
             raise HTTPException(status_code=404, detail="Failed to update action item")
         
         # Get updated item
-        updated_summarization = summarizations_col.find_one({"_id": summarization["_id"]})
-        updated_item = None
-        for item in updated_summarization.get("results", []):
-            if item.get("_id") == object_item_id:
-                updated_item = item
-                break
+        updated_item = actionitems_col.find_one({"_id": object_item_id})
+        
+        # Convert ObjectId to string
+        if updated_item and "_id" in updated_item:
+            updated_item["_id"] = str(updated_item["_id"])
         
         return APIResponse(
             success=True,
