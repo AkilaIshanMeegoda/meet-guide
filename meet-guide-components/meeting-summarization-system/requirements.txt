@@ -11,3 +11,4 @@ bertopic
 scikit-learn
 pydantic
 pymongo
+python-dotenv
