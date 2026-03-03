@@ -1,0 +1,24 @@
+// VideoRoom plugin configuration
+// Location: /opt/janus/etc/janus/janus.plugin.videoroom.jcfg
+// Purpose: Support video conferencing with per-stream recording capability
+
+general: {
+    admin_key = "supersecret"  // CHANGE THIS!
+    
+    // Recording settings
+    record = true
+    rec_dir = "/var/recordings/meetings"
+    
+    // Lock settings
+    lock_rtp_forward = false
+    lock_play_file = false
+    
+    // Event handlers
+    events = true
+    
+    // String IDs
+    string_ids = true
+}
+
+// Dynamic room creation is handled by MiroTalk/recorder service
+// Rooms are created via API with recording enabled per-publisher

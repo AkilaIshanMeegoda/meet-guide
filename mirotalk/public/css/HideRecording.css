@@ -1,0 +1,60 @@
+/**
+ * Hide Recording CSS - Ensures all recording UI elements stay hidden
+ * This provides an extra layer of hiding for recording-related UI
+ */
+
+/* Hide recording buttons */
+#startRecButton,
+#stopRecButton,
+#pauseRecButton,
+#resumeRecButton,
+#tabRecordingBtn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Hide recording tab content */
+#tabRecording {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide recording image */
+#recordingImage {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide recording timer */
+#recordingTime,
+#recordingStatus {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide recording messages and options */
+#recordingMessage,
+#roomRecordingOptions,
+#roomHostOnlyRecording,
+#roomRecordingServer,
+#lastRecordingInfo {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide any recording icons in the UI */
+.fa-record-vinyl,
+i.fa-record-vinyl {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide recording status badges on peer videos */
+[data-recording="true"],
+.recording-badge,
+.recording-indicator {
+    display: none !important;
+    visibility: hidden !important;
+}

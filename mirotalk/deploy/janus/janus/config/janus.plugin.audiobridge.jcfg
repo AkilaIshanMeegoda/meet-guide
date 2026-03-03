@@ -1,0 +1,36 @@
+// AudioBridge plugin configuration
+// Location: /opt/janus/etc/janus/janus.plugin.audiobridge.jcfg
+// Purpose: Per-participant audio recording for transcription
+
+general: {
+    admin_key = "supersecret"  // CHANGE THIS!
+    
+    // Recording settings
+    record = true
+    rec_dir = "/var/recordings/meetings"
+    
+    // Audio quality settings for recording
+    sampling_rate = 16000       // 16kHz optimal for speech recognition
+    spatial_audio = false
+    
+    // Opus codec settings
+    default_prebuffering = 6
+    default_bitrate = 128000
+    
+    // Room settings
+    #rooms_dir = "/opt/janus/etc/janus/audiobridge.d"
+}
+
+// Example room configuration
+# room-1234: {
+#     description = "Demo audio conference"
+#     secret = "adminpwd"
+#     sampling_rate = 16000
+#     audiolevel_ext = true
+#     audiolevel_event = true
+#     audio_active_packets = 100
+#     audio_level_average = 25
+#     record = true
+#     record_file = "/var/recordings/meetings/room-1234.wav"
+#     record_dir = "/var/recordings/meetings"
+# }
