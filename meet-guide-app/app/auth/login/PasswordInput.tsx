@@ -1,8 +1,12 @@
 "use client";
 import React, { useState } from "react";
 
-const PasswordInput: React.FC = () => {
-  const [password, setPassword] = useState<string>("");
+interface PasswordInputProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+const PasswordInput: React.FC<PasswordInputProps> = ({ value = "", onChange }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => {
@@ -33,9 +37,9 @@ const PasswordInput: React.FC = () => {
         <input
           type={showPassword ? "text" : "password"}
           placeholder="Enter your password"
-          value={password}
+          value={value}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
+            onChange?.(e.target.value)
           }
           className="w-full h-12 pl-10 pr-10 text-base text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4c46b6] focus:border-transparent"
           required

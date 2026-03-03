@@ -1,5 +1,8 @@
+"use client";
+
 import Sidebar from "@/components/Sidebar";
 import Topbar from "@/components/Topbar";
+import ManagementGuard from "@/components/ManagementGuard";
 
 export default function ManagementLayout({
     children,
@@ -7,14 +10,16 @@ export default function ManagementLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex h-screen bg-gray-50">
-            <Sidebar />
-            <div className="flex-1 flex flex-col overflow-hidden">
-                <Topbar />
-                <main className="flex-1 overflow-y-auto p-8">
-                    {children}
-                </main>
+        <ManagementGuard>
+            <div className="flex h-screen bg-gray-50">
+                <Sidebar />
+                <div className="flex-1 flex flex-col overflow-hidden">
+                    <Topbar />
+                    <main className="flex-1 overflow-y-auto p-8">
+                        {children}
+                    </main>
+                </div>
             </div>
-        </div>
+        </ManagementGuard>
     );
 }

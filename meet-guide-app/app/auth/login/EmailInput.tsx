@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
-const EmailInput: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
+interface EmailInputProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
 
+const EmailInput: React.FC<EmailInputProps> = ({ value = "", onChange }) => {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-base font-medium text-[#1e3a5f]">
@@ -28,9 +31,9 @@ const EmailInput: React.FC = () => {
         <input
           type="email"
           placeholder="Enter your email"
-          value={email}
+          value={value}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.target.value)
+            onChange?.(e.target.value)
           }
           className="w-full h-12 pl-10 pr-4 text-base text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4c46b6] focus:border-transparent"
           required

@@ -1,0 +1,14 @@
+spacy
+spacy-transformers
+torch
+transformers
+dateparser
+python-Levenshtein
+fastapi
+uvicorn
+sentence-transformers
+bertopic
+scikit-learn
+pydantic
+pymongo
+python-dotenv

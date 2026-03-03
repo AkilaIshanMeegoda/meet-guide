@@ -27,16 +27,16 @@ const MeetingDetailsPage = ({ params }: PageProps) => {
             href: `/meetings/${id}/action-items`
         },
         {
-            title: "Pronunciation Coaching",
-            description: "Improve your clarity and confidence with real-time pronunciation feedback...",
+            title: "Pronunciation Feedback",
+            description: "Improve your clarity and confidence with pronunciation feedback...",
             image: "/pronunciation_coaching.png",
-            href: `#`
+            href: `/meetings/${id}/feedback`
         },
         {
             title: "Professional Score",
             description: "Elevate your communication professionalism with AI-driven insights",
             image: "/intent_highlights.png",
-            href: "/meetings/${id}/professional-scores"
+            href: `/meetings/${id}/professional-scores`
         },
     ];
 

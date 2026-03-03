@@ -1,0 +1,38 @@
+# Root level .gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Essential config files folder - NEVER commit this!
+ESSENTIAL_CONFIG_FILES/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# SSL Certificates
+*.pem
+*.key
+*.crt
+ssl/
+
+# Documentation (optional - uncomment if you don't want to track)
+# *.md
+# !README.md

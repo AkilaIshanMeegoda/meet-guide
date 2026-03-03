@@ -1,0 +1,39 @@
+{
+  "participants": {
+    "chalana@gmail.com": {
+      "reference_words": 146,
+      "whisper_wer": 12.32876712328767,
+      "wav2vec2_wer": 46.57534246575342,
+      "whisper_errors": 18,
+      "wav2vec2_errors": 68
+    },
+    "savishka@gmail.com": {
+      "reference_words": 77,
+      "whisper_wer": 12.987012987012985,
+      "wav2vec2_wer": 51.94805194805194,
+      "whisper_errors": 10,
+      "wav2vec2_errors": 40
+    },
+    "dinithi@gmail.com": {
+      "reference_words": 113,
+      "whisper_wer": 2.6548672566371683,
+      "wav2vec2_wer": 28.31858407079646,
+      "whisper_errors": 3,
+      "wav2vec2_errors": 32
+    }
+  },
+  "overall": {
+    "whisper": {
+      "total_errors": 31,
+      "total_words": 336,
+      "wer": 9.226190476190476,
+      "accuracy": 90.77380952380952
+    },
+    "wav2vec2": {
+      "total_errors": 140,
+      "total_words": 336,
+      "wer": 41.66666666666667,
+      "accuracy": 58.33333333333333
+    }
+  }
+}
