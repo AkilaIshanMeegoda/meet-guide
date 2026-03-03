@@ -1,0 +1,35 @@
+// HTTP/HTTPS transport for Janus
+// Location: /opt/janus/etc/janus/janus.transport.http.jcfg
+
+general: {
+    json = "indented"
+    base_path = "/janus"
+    http = true
+    port = 8088
+    https = false
+    # secure_port = 8089
+    
+    // Admin/monitor endpoints
+    admin_http = true
+    admin_port = 7088
+    admin_https = false
+    # admin_secure_port = 7889
+    
+    // CORS configuration - IMPORTANT for MiroTalk frontend
+    cors_origins = "*"  // Change to your domain in production: "https://jitsi.awdspark.com"
+    cors_methods = "GET, POST, PUT, DELETE, OPTIONS"
+    cors_headers = "Content-Type, Authorization"
+    cors_allow_credentials = true
+    
+    // Thread pool
+    threads = "unlimited"
+    
+    // WebSocket support (optional if using separate ws transport)
+    ws = true
+    ws_port = 8188
+    wss = false
+    # wss_port = 8989
+    
+    ws_logging = "err"
+    ws_acl = ""  // Empty = allow all
+}

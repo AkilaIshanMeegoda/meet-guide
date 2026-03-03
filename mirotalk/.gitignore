@@ -1,0 +1,71 @@
+# mac
+.DS_Store
+
+# git folder
+.git
+
+# npm
+node_modules
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# cache
+.cache
+
+# personal
+docker-compose.yml
+docker-push.sh
+data
+rec
+
+# virtual background
+custom
+
+# Recordings - IMPORTANT: Don't commit user recordings
+app/src/recordings/**
+!app/src/recordings/.gitkeep
+!app/src/recordings/README.md
+!app/src/recordings/*.md
+!app/src/recordings/*.js
+!app/src/recordings/*.py
+!app/src/recordings/*.sh
+!app/src/recordings/package.json
+!app/src/recordings/package-lock.json
+
+# Logs
+logs/
+*.log
+.pm2/
+
+# PM2
+ecosystem.config.js
+
+# RTMP
+rtmp
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.p12
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+
+# Uploads
+public/uploads/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
