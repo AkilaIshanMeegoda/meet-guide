@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import FormFields from "../components/FormField";
 
 /* ----------------------- Logo Component ----------------------- */
@@ -62,28 +64,73 @@ const LoginLink = () => (
 
 /* ----------------------- Main Form Component ----------------------- */
 const RegistrationForm = () => {
+  const router = useRouter();
+  const { signup, user, isLoading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      const destination = user.is_management ? "/management/dashboard" : "/dashboard";
+      router.push(destination);
+    }
+  }, [user, authLoading, router]);
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
+    setError("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signup({
+        email: formData.email,
+        username: formData.email.split("@")[0],
+        password: formData.password,
+        confirm_password: formData.confirmPassword,
+        full_name: formData.fullName
+      });
+      // The redirect will be handled by the useEffect above
+    } catch (err: any) {
+      setError(err.message || "Signup failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm mb-4">
+          {error}
+        </div>
+      )}
+      
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
         <FormFields data={formData} onChange={handleChange} />
         <div className="pt-4 w-full">
-          <Button>Sign Up</Button>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="flex justify-center items-center w-full h-14 rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white text-base font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Signing up..." : "Sign Up"}
+          </button>
         </div>
       </form>
 

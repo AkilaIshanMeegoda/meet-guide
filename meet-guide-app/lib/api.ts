@@ -10,24 +10,17 @@ let accessToken: string | null = null;
 
 export function setAccessToken(token: string | null) {
     accessToken = token;
-    if (typeof window !== 'undefined') {
-        if (token) {
-            localStorage.setItem('access_token', token);
-        } else {
-            localStorage.removeItem('access_token');
-        }
+    if (token) {
+        localStorage.setItem('access_token', token);
+    } else {
+        localStorage.removeItem('access_token');
     }
 }
 
 export function getAccessToken(): string | null {
-    // Always read from localStorage as the source of truth to handle
-    // module re-evaluation across route changes in Next.js App Router
+    if (accessToken) return accessToken;
     if (typeof window !== 'undefined') {
-        const stored = localStorage.getItem('access_token');
-        if (stored) {
-            accessToken = stored; // keep in-memory cache in sync
-            return stored;
-        }
+        accessToken = localStorage.getItem('access_token');
     }
     return accessToken;
 }
@@ -60,14 +53,10 @@ async function request<T>(
         console.log('API Response status:', response.status);
 
         if (response.status === 401) {
-            // Token expired or invalid - clear it
+            // Token expired or invalid
             setAccessToken(null);
-            // Only redirect to login if not already on an auth page
             if (typeof window !== 'undefined') {
-                const path = window.location.pathname;
-                if (!path.startsWith('/auth')) {
-                    window.location.href = '/auth/login';
-                }
+                window.location.href = '/auth/login';
             }
             throw new Error('Unauthorized');
         }
@@ -216,6 +205,21 @@ export interface CreateMeetingData {
     invited_emails?: string[];
 }
 
+export interface PaginatedMeetings {
+    items: Meeting[];
+    total: number;
+    page: number;
+    page_size: number;
+    total_pages: number;
+}
+
+export interface ManagementMeetingsParams {
+    page?: number;
+    page_size?: number;
+    status?: string;
+    search?: string;
+}
+
 export const meetingsApi = {
     async create(data: CreateMeetingData): Promise<{ success: boolean; data: Meeting }> {
         return request('/meetings/', {
@@ -226,6 +230,18 @@ export const meetingsApi = {
 
     async getAll(): Promise<{ success: boolean; data: Meeting[] }> {
         return request('/meetings/');
+    },
+
+    async getAllForManagement(
+        params: ManagementMeetingsParams = {},
+    ): Promise<{ success: boolean; data: PaginatedMeetings }> {
+        const query = new URLSearchParams();
+        if (params.page) query.set('page', String(params.page));
+        if (params.page_size) query.set('page_size', String(params.page_size));
+        if (params.status) query.set('status', params.status);
+        if (params.search) query.set('search', params.search);
+        const qs = query.toString();
+        return request(`/meetings/management/all${qs ? `?${qs}` : ''}`);
     },
 
     async getEnded(): Promise<{ success: boolean; data: Meeting[] }> {

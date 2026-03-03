@@ -10,7 +10,7 @@ from ..models import (
 )
 from ..services.meeting_service import MeetingService
 from ..services.user_service import UserService
-from ..auth import get_current_user
+from ..auth import get_current_user, get_current_management_user
 
 router = APIRouter(prefix="/meetings", tags=["Meetings"])
 
@@ -41,6 +41,38 @@ async def create_meeting(
         success=True,
         message="Meeting created successfully",
         data=meeting.model_dump()
+    )
+
+
+@router.get("/management/all", response_model=APIResponse)
+async def get_all_meetings_management(
+    current_user=Depends(get_current_management_user),
+    page: int = Query(1, ge=1, description="Page number"),
+    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    status: Optional[str] = Query(None, description="Filter by status"),
+    search: Optional[str] = Query(None, description="Search by title"),
+):
+    """
+    Get all meetings across all users with pagination (management only).
+    """
+    meetings, total = await MeetingService.get_all_meetings(
+        page=page,
+        page_size=page_size,
+        status_filter=status,
+        search=search,
+    )
+    total_pages = (total + page_size - 1) // page_size
+
+    return APIResponse(
+        success=True,
+        message=f"Found {total} meetings",
+        data={
+            "items": [m.model_dump() for m in meetings],
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": total_pages,
+        },
     )
 
 

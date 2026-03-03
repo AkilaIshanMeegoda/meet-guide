@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
-const { protect } = require('../middleware/auth');
+const { protect, requireManagement } = require('../middleware/auth');
 const Meeting = require('../models/Meeting');
 const pronunciationService = require('../services/pronunciationService');
 const processMeetingService = require('../services/processMeetingService');
@@ -234,6 +234,59 @@ router.get('/ended', protect, async (req, res) => {
 });
 
 /**
+ * GET /api/meetings/management/all
+ * Get all meetings for management dashboard (paginated)
+ */
+router.get('/management/all', protect, requireManagement, async (req, res) => {
+    try {
+        const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+        const pageSize = Math.max(parseInt(req.query.page_size, 10) || 12, 1);
+        const status = req.query.status ? String(req.query.status).trim() : undefined;
+        const search = req.query.search ? String(req.query.search).trim() : undefined;
+
+        const query = {};
+
+        if (status) {
+            query.status = status;
+        }
+
+        if (search) {
+            const searchRegex = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+            query.$or = [
+                { title: searchRegex },
+                { meeting_id: searchRegex },
+                { host_name: searchRegex },
+                { host_email: searchRegex }
+            ];
+        }
+
+        const skip = (page - 1) * pageSize;
+
+        const [items, total] = await Promise.all([
+            Meeting.find(query).sort({ created_at: -1 }).skip(skip).limit(pageSize),
+            Meeting.countDocuments(query)
+        ]);
+
+        const totalPages = Math.max(Math.ceil(total / pageSize), 1);
+
+        res.json({
+            success: true,
+            message: `Found ${total} meetings`,
+            data: {
+                items,
+                total,
+                page,
+                page_size: pageSize,
+                total_pages: totalPages
+            }
+        });
+    } catch (error) {
+        console.error('Error in /meetings/management/all:', error);
+        res.status(400).json({ success: false, message: error.message });
+    }
+});
+
+/**
  * GET /api/meetings/:meetingId
  * Get meeting by ID
  */
@@ -361,7 +414,9 @@ router.post('/:meetingId/end', protect, async (req, res) => {
         }
 
         // Start full processing pipeline in background
-        const processingStarted = processMeetingService.processMeetingAsync(
+        // Delay 30s to allow recording upload + conversion to complete before processing
+        const processingStarted = { success: true, message: 'Processing will start after recording uploads', meetingId };
+        setTimeout(() => processMeetingService.processMeetingAsync(
             meetingId,
             false, // Use Deepgram by default
             async (err, result) => {
@@ -413,7 +468,7 @@ router.post('/:meetingId/end', protect, async (req, res) => {
                 
                 console.log(`[Pipeline] ✅ Full processing pipeline complete for ${meetingId}`);
             }
-        );
+        ), 30000); // 30-second delay for recording upload
 
         res.json({
             success: true,

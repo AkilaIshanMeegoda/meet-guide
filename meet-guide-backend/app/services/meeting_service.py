@@ -103,6 +103,58 @@ class MeetingService:
         )
     
     @staticmethod
+    async def get_all_meetings(
+        page: int = 1,
+        page_size: int = 20,
+        status_filter: Optional[str] = None,
+        search: Optional[str] = None,
+    ) -> tuple[List[MeetingResponse], int]:
+        """Get all meetings with pagination (for management).
+        
+        Returns a tuple of (meetings_list, total_count).
+        """
+        meetings = get_meetings_collection()
+
+        query: dict = {}
+        if status_filter:
+            query["status"] = status_filter
+        if search:
+            query["title"] = {"$regex": search, "$options": "i"}
+
+        total = await meetings.count_documents(query)
+
+        skip = (page - 1) * page_size
+        cursor = (
+            meetings.find(query)
+            .sort("created_at", -1)
+            .skip(skip)
+            .limit(page_size)
+        )
+
+        result: List[MeetingResponse] = []
+        async for meeting in cursor:
+            mirotalk_url = f"{settings.mirotalk_url}/join/{meeting['meeting_id']}"
+            result.append(MeetingResponse(
+                id=str(meeting["_id"]),
+                meeting_id=meeting["meeting_id"],
+                title=meeting["title"],
+                description=meeting.get("description"),
+                host_id=meeting["host_id"],
+                host_name=meeting["host_name"],
+                participants=meeting.get("participants", []),
+                status=MeetingStatus(meeting["status"]),
+                scheduled_start=meeting.get("scheduled_start"),
+                scheduled_end=meeting.get("scheduled_end"),
+                actual_start=meeting.get("actual_start"),
+                actual_end=meeting.get("actual_end"),
+                recording_folder=meeting.get("recording_folder"),
+                created_at=meeting["created_at"],
+                mirotalk_url=mirotalk_url,
+            ))
+
+        return result, total
+
+    @staticmethod
     async def get_meetings_by_user(user_id: str, limit: int = 50) -> List[MeetingResponse]:
         """Get all meetings for a user (as host or participant)"""
         meetings = get_meetings_collection()
