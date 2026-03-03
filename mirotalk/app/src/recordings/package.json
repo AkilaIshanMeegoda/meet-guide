@@ -1,0 +1,21 @@
+{
+  "name": "mirotalk-recording-processor",
+  "version": "1.0.0",
+  "description": "Process MiroTalk meeting recordings with timeline analysis and audio merging",
+  "main": "process-meeting.js",
+  "scripts": {
+    "process": "node process-meeting.js"
+  },
+  "dependencies": {
+    "fluent-ffmpeg": "^2.1.2"
+  },
+  "keywords": [
+    "mirotalk",
+    "recording",
+    "audio",
+    "timeline",
+    "ffmpeg"
+  ],
+  "author": "",
+  "license": "ISC"
+}

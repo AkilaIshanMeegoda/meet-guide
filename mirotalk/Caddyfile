@@ -1,0 +1,18 @@
+jitsi.awdspark.com {
+    root * /usr/share/caddy
+    file_server
+
+    # Increase limits for recording chunks upload
+    reverse_proxy localhost:3010 {
+        # Increase timeout for large file uploads
+        transport http {
+            read_timeout 300s
+            write_timeout 300s
+        }
+    }
+
+    # Set maximum request body size (for recording chunks)
+    request_body {
+        max_size 100MB
+    }
+}

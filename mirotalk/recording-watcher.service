@@ -1,0 +1,20 @@
+[Unit]
+Description=MiroTalk Recording Watcher Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/mirotalk
+ExecStart=/home/ubuntu/mirotalk/watch-recordings.sh
+Restart=always
+RestartSec=10
+StandardOutput=append:/var/log/recording-watcher.log
+StandardError=append:/var/log/recording-watcher.log
+
+# Environment
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+[Install]
+WantedBy=multi-user.target
