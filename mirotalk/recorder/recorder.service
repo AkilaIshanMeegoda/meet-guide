@@ -1,0 +1,41 @@
+[Unit]
+Description=Janus Recorder Service
+After=network.target janus.service
+Requires=janus.service
+
+[Service]
+Type=simple
+User=recorder
+Group=recorder
+WorkingDirectory=/opt/janus-recorder
+
+# Environment
+Environment="NODE_ENV=production"
+Environment="RECORDER_PORT=3001"
+Environment="JANUS_ADMIN_URL=http://localhost:7088/admin"
+Environment="JANUS_ADMIN_SECRET=janusoverlord"
+Environment="TRANSCRIBE_ENDPOINT=http://127.0.0.1:3000/transcribe"
+Environment="RECORDINGS_BASE_PATH=/var/recordings/meetings"
+Environment="LOG_LEVEL=info"
+Environment="RTP_BASE_PORT=20000"
+
+# Start command
+ExecStart=/usr/bin/node /opt/janus-recorder/index.js
+
+# Restart policy
+Restart=on-failure
+RestartSec=5s
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/recordings /var/transcribe /var/log
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
