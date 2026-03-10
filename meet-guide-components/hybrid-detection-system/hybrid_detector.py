@@ -48,11 +48,6 @@ SLANG_RULES = {
     "ambiguous": [
         "vibe", "cap", "fire", "mid", "sick", "solid", "hits", "bet", "slaps", "wild",
         "crazy", "trash", "mood", "basic", "salty"
-        # "ate", "basic", "bet", "cap", "extra", "fire", "flex", "ghosting",
-        # "glow up", "green flag", "red flag", "mid", "slaps", "tea",
-        # "trash", "salty", "shook", "stan", "drip", "woke", "bop", "cancel",
-        # "mother", "slide", "mood", "hits different", "vibe", "for real",
-        # "hits", "solid", "sick"
     ],
     "unambiguous": [
         "skibidi", "rizz", "yeet", "sus", "cheugy", "simp", "finna", "gyatt",
