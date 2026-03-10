@@ -1,0 +1,57 @@
+﻿Meeting: projectmeeting5
+Date: 2025-12-31 17:01:16.544 UTC
+Total Duration: 00:04:12.340
+
+=== VOICE ACTIVITY TRANSCRIPT ===
+
+00:00:00.506 - 00:04:03.177 | akila@gmail.com@gmail.com
+00:00:23.725 - 00:04:12.336 | dinithi@gmail.com
+00:01:15.457 - 00:04:05.355 | chalana@gmail.com
+00:01:37.740 - 00:04:06.842 | savishka@gmail.com
+
+00:00:00.000 - 00:00:00.506 | [silence]
+
+=== SPEAKING TIME STATISTICS ===
+
+akila@gmail.com:
+  Total Time: 242.672 seconds (96.2% of meeting)
+  Recording Segments: 1
+  Start Time: 00:00:00.506
+  End Time: 00:04:03.177
+
+dinithi@gmail.com:
+  Total Time: 228.612 seconds (90.6% of meeting)
+  Recording Segments: 1
+  Start Time: 00:00:23.725
+  End Time: 00:04:12.336
+
+chalana@gmail.com:
+  Total Time: 169.898 seconds (67.3% of meeting)
+  Recording Segments: 1
+  Start Time: 00:01:15.457
+  End Time: 00:04:05.355
+
+savishka@gmail.com:
+  Total Time: 149.102 seconds (59.1% of meeting)
+  Recording Segments: 1
+  Start Time: 00:01:37.740
+  End Time: 00:04:06.842
+
+Total Speaking Time: 790.284 seconds
+Total Meeting Duration: 252.340 seconds
+Note: Speaking times may overlap when multiple users talk simultaneously
+
+Participants: 4
+- akila@gmail.com@gmail.com
+- dinithi@gmail.com
+- chalana@gmail.com
+- savishka@gmail.com
+
+=== VISUAL TIMELINE ===
+
+00:00:00.000                  00:02:06.170                  00:04:12.340
+├─────────────────────────────┼─────────────────────────────┤
+akila@gmail.com [══════════════════════════════════════════════════════════  ]
+dinithi@gmail.com [     ═══════════════════════════════════════════════════════]
+chalana@gmail.com [                 ══════════════════════════════════════════ ]
+savishka@gmail.com [                       ════════════════════════════════════ ]

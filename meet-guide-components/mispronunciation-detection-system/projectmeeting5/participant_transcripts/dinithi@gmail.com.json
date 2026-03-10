@@ -1,0 +1,160 @@
+{
+  "transcript": "Yeah. Overall things are moving forward, but, honestly, some of the data lines are stuck. It feels like",
+  "metadata": {
+    "duration": 226.32,
+    "channels": 1.0,
+    "model": "nova-2"
+  },
+  "words": [
+    {
+      "word": "yeah",
+      "start": 93.07,
+      "end": 93.57,
+      "confidence": 0.94677734,
+      "speaker": 0
+    },
+    {
+      "word": "overall",
+      "start": 93.79,
+      "end": 94.29,
+      "confidence": 0.74316406,
+      "speaker": 0
+    },
+    {
+      "word": "things",
+      "start": 94.75,
+      "end": 95.07,
+      "confidence": 0.5078125,
+      "speaker": 0
+    },
+    {
+      "word": "are",
+      "start": 95.07,
+      "end": 95.23,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "moving",
+      "start": 95.23,
+      "end": 95.630005,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "forward",
+      "start": 95.630005,
+      "end": 96.130005,
+      "confidence": 0.81884766,
+      "speaker": 0
+    },
+    {
+      "word": "but",
+      "start": 96.350006,
+      "end": 96.75,
+      "confidence": 0.88500977,
+      "speaker": 0
+    },
+    {
+      "word": "honestly",
+      "start": 96.75,
+      "end": 97.25,
+      "confidence": 0.99365234,
+      "speaker": 0
+    },
+    {
+      "word": "some",
+      "start": 97.805,
+      "end": 98.045,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "of",
+      "start": 98.045,
+      "end": 98.205,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 98.205,
+      "end": 98.445,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "data",
+      "start": 98.445,
+      "end": 98.685,
+      "confidence": 0.81640625,
+      "speaker": 0
+    },
+    {
+      "word": "lines",
+      "start": 98.685,
+      "end": 99.005,
+      "confidence": 0.8535156,
+      "speaker": 0
+    },
+    {
+      "word": "are",
+      "start": 99.005,
+      "end": 99.505,
+      "confidence": 0.90478516,
+      "speaker": 0
+    },
+    {
+      "word": "stuck",
+      "start": 99.884995,
+      "end": 100.384995,
+      "confidence": 0.71972656,
+      "speaker": 0
+    },
+    {
+      "word": "it",
+      "start": 113.31,
+      "end": 113.55,
+      "confidence": 0.7006836,
+      "speaker": 0
+    },
+    {
+      "word": "feels",
+      "start": 113.55,
+      "end": 113.95,
+      "confidence": 0.6816406,
+      "speaker": 0
+    },
+    {
+      "word": "like",
+      "start": 113.95,
+      "end": 114.45,
+      "confidence": 0.9370117,
+      "speaker": 0
+    }
+  ],
+  "paragraphs": [
+    {
+      "sentences": [
+        {
+          "text": "Yeah.",
+          "start": 93.07,
+          "end": 93.57
+        },
+        {
+          "text": "Overall things are moving forward, but, honestly, some of the data lines are stuck.",
+          "start": 93.79,
+          "end": 100.384995
+        },
+        {
+          "text": "It feels like",
+          "start": 113.31,
+          "end": 114.45
+        }
+      ],
+      "start": 93.07,
+      "end": 114.45,
+      "num_words": 18.0
+    }
+  ]
+}
