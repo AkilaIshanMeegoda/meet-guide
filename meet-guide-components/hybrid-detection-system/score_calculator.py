@@ -26,8 +26,8 @@
 # -------------------------------------------------
 SEVERITY_WEIGHTS = {
     "unambiguous": 1.0,          # Clearly slang (e.g., "rizz", "skibidi")
-    "ambiguous_high": 0.7,       # Ambiguous but AI is very sure (confidence >= 0.95)
-    "ambiguous_moderate": 0.4,   # Ambiguous, AI is moderately sure (0.90 - 0.95)
+    "ambiguous_high": 0.7,       # Ambiguous but AI is very sure (confidence >= 0.80)
+    "ambiguous_moderate": 0.4,   # Ambiguous, AI is moderately sure (0.60 - 0.80)
 }
 
 # -------------------------------------------------
@@ -73,8 +73,8 @@ def classify_slang_type(detection_result):
     
     Takes the output from hybrid_detector.analyze() and classifies it into:
       - "unambiguous"        → Rule-based detection (confidence = 1.0)
-      - "ambiguous_high"     → AI detected with confidence >= 0.95
-      - "ambiguous_moderate" → AI detected with confidence 0.90 - 0.95
+      - "ambiguous_high"     → AI detected with confidence >= 0.80
+      - "ambiguous_moderate" → AI detected with confidence 0.60 - 0.80
       - None                 → Not slang
     
     Args:
@@ -94,7 +94,7 @@ def classify_slang_type(detection_result):
         return "unambiguous"
 
     # AI-based detections: classify by confidence level
-    if confidence >= 0.95:
+    if confidence >= 0.80:
         return "ambiguous_high"
     else:
         return "ambiguous_moderate"
@@ -325,6 +325,7 @@ def _build_empty_report(participant_info=None, meeting_info=None):
         },
     }
 
+
 # -------------------------------------------------
 # Quick test when running this file directly
 # -------------------------------------------------
@@ -387,4 +388,3 @@ if __name__ == "__main__":
     print("=" * 60)
     print("\n  Full JSON:")
     print(json.dumps(report, indent=2))
-

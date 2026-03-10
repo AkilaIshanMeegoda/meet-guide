@@ -45,7 +45,7 @@ def extract_assignee_context(doc, verb, current_speaker, prev_speaker):
         if t in ["we", "us", "'s"]:
             return "Team / All"
         if t == "you":
-            return f"{prev_speaker} (Implied)" if prev_speaker else "Unassigned"
+            return f"{prev_speaker}" if prev_speaker else "Unassigned"
         return token.text
 
     # Check subject of the verb
