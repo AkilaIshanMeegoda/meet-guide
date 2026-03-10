@@ -14,52 +14,50 @@ if sys.platform == 'win32':
 from sync_corrections import sync_corrections
 
 
-# Fine-tuned Whisper model configuration
-WHISPER_MODEL_CONFIG = {
-    "model_name": "openai/whisper-small",
-    "fine_tuned_path": "./finetuned_whisper_nptel",
-    "dataset": "NPTEL Indian English Lectures",
-    "training_epochs": 3,
-    "language": "en",
-    "task": "transcribe",
-    "optimizations": [
-        "Indian English accent adaptation",
-        "Technical vocabulary fine-tuning",
-        "Low WER on NPTEL test set"
-    ]
+# Dual-model pipeline configuration
+# Step 1 : Deepgram API  → transcript text + word-level timestamps
+# Step 1b: Fine-tuned Whisper → confidence scores via Deepgram-Whisper word alignment
+PIPELINE_CONFIG = {
+    "transcription_model": "Deepgram nova-2",
+    "confidence_model":    "whisper-small-finetuned-nptel",
+    "fine_tuned_path":     "./finetuned_whisper_nptel",
+    "dataset":             "NPTEL Indian English Lectures",
+    "training_epochs":     3,
+    "language":            "en",
+    "description": (
+        "Deepgram provides accurate word boundaries and timestamps. "
+        "Fine-tuned Whisper validates each word and assigns confidence scores "
+        "based on agreement between the two models."
+    ),
 }
 
 
 def show_model_info():
-    """Display information about available transcription models"""
+    """Display dual-model pipeline information."""
     print("\n" + "="*70)
-    print("  TRANSCRIPTION MODELS AVAILABLE")
+    print("  DUAL-MODEL PRONUNCIATION PIPELINE")
     print("="*70)
-    
+
     print("\n+" + "-"*68 + "+")
-    print("|  1. DEEPGRAM API (Default)                                        |")
+    print("|  STEP 1 — TRANSCRIPTION: Deepgram API                            |")
     print("+" + "-"*68 + "+")
-    print("|  * Cloud-based automatic speech recognition                       |")
-    print("|  * Fast processing with word-level timestamps                     |")
-    print("|  * Confidence scores for pronunciation analysis                   |")
-    print("|  * Speaker diarization support                                    |")
+    print("|  * Generates word-level transcript with accurate timestamps       |")
+    print("|  * Cloud ASR (nova-2) with speaker diarization                   |")
+    print("|  * Transcript text = source of truth for all downstream steps    |")
     print("+" + "-"*68 + "+")
-    
+
     print("\n+" + "-"*68 + "+")
-    print("|  2. FINE-TUNED WHISPER MODEL                                      |")
+    print("|  STEP 1b — CONFIDENCE SCORING: Fine-Tuned Whisper                |")
     print("+" + "-"*68 + "+")
-    print(f"|  * Base Model: {WHISPER_MODEL_CONFIG['model_name']:<51} |")
-    print(f"|  * Fine-tuned on: {WHISPER_MODEL_CONFIG['dataset']:<48} |")
-    print(f"|  * Training Epochs: {WHISPER_MODEL_CONFIG['training_epochs']:<46} |")
-    print("|  * Location: ./finetuned_whisper_nptel                            |")
+    print(f"|  * Model: {PIPELINE_CONFIG['confidence_model']:<57} |")
+    print(f"|  * Dataset: {PIPELINE_CONFIG['dataset']:<55} |")
+    print(f"|  * Epochs: {PIPELINE_CONFIG['training_epochs']:<56} |")
+    print("|  * Aligns Whisper output to Deepgram words via SequenceMatcher   |")
+    print("|  * Agree → confidence 0.92 | Disagree → confidence 0.45         |")
     print("+" + "-"*68 + "+")
-    print("|  Optimizations:                                                   |")
-    for opt in WHISPER_MODEL_CONFIG['optimizations']:
-        print(f"|    [OK] {opt:<58} |")
-    print("+" + "-"*68 + "+")
-    
+
     print("\n" + "="*70)
-    print("  Use --use-whisper flag to enable fine-tuned Whisper transcription")
+    print("  Both models always run. Deepgram timestamps are never modified.")
     print("="*70 + "\n")
 
 
@@ -96,85 +94,86 @@ def parse_arguments():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python process_meeting.py projectmeeting1              # Use Deepgram (default)
-  python process_meeting.py projectmeeting1 --use-whisper  # Use fine-tuned Whisper
-  python process_meeting.py --model-info                 # Show model information
+  python process_meeting.py projectmeeting1              # Run full dual-model pipeline
+  python process_meeting.py --model-info                 # Show pipeline information
         """
     )
     parser.add_argument('meeting_folder', nargs='?', help='Meeting folder to process')
-    parser.add_argument('--use-whisper', action='store_true', 
-                        help='Use fine-tuned Whisper model for transcription')
     parser.add_argument('--model-info', action='store_true',
-                        help='Show information about available transcription models')
-    
+                        help='Show information about the dual-model pipeline')
+
     return parser.parse_args()
 
 
 def main():
     args = parse_arguments()
-    
-    # Show model info if requested
+
+    # Show pipeline info if requested
     if args.model_info:
         show_model_info()
         sys.exit(0)
-    
+
     if not args.meeting_folder:
-        print("Usage: python process_meeting.py <meeting_folder> [--use-whisper]")
+        print("Usage: python process_meeting.py <meeting_folder>")
         print("\nExample: python process_meeting.py projectmeeting1")
-        print("         python process_meeting.py projectmeeting1 --use-whisper")
-        print("\nUse --model-info to see available transcription models")
+        print("\nUse --model-info to see the dual-model pipeline details")
         sys.exit(1)
-    
+
     meeting_folder = args.meeting_folder
     meeting_path = Path(meeting_folder)
-    
+
     if not meeting_path.exists():
         print(f"Error: Meeting folder '{meeting_folder}' not found")
         sys.exit(1)
-    
-    # Determine transcription backend
-    use_whisper = args.use_whisper
-    backend_name = "Fine-tuned Whisper (NPTEL)" if use_whisper else "Deepgram API"
-    
+
     print(f"\n{'#'*60}")
     print(f"PROCESSING MEETING: {meeting_folder}")
-    print(f"Transcription Backend: {backend_name}")
+    print(f"Pipeline: Deepgram (transcription) + Whisper (confidence)")
     print(f"{'#'*60}")
-    
-    if use_whisper:
-        print("\n+" + "-"*56 + "+")
-        print("|  Fine-tuned Whisper Model Configuration:              |")
-        print("+" + "-"*56 + "+")
-        print(f"|  Model: {WHISPER_MODEL_CONFIG['model_name']:<45} |")
-        print(f"|  Dataset: {WHISPER_MODEL_CONFIG['dataset']:<43} |")
-        print(f"|  Path: {WHISPER_MODEL_CONFIG['fine_tuned_path']:<47} |")
-        print("+" + "-"*56 + "+")
-    
-    # Check if transcripts already exist
+
+    # ----------------------------------------------------------------
+    # Step 1/4 — Deepgram transcription
+    #   Always uses transcribe.py regardless of any flags.
+    #   Produces: participant_transcripts/<email>.json  with Deepgram
+    #             confidence scores (these will be replaced in Step 1b).
+    # ----------------------------------------------------------------
     transcript_folder = meeting_path / "participant_transcripts"
     has_transcripts = transcript_folder.exists() and any(transcript_folder.glob("*.txt"))
-    
-    # Step 1: Run transcription
-    transcribe_script = "whisper_finetuned_transcribe.py" if use_whisper else "transcribe.py"
-    step_desc = f"Step 1/4: Transcribing audio with {backend_name}"
-    
+
     if has_transcripts:
         print(f"\n{'='*60}")
-        print(step_desc)
+        print("Step 1/4: Transcribing audio with Deepgram API")
         print(f"{'='*60}")
         print("[OK] Transcripts already exist, skipping this step")
         step1 = True
     else:
         step1 = run_command(
-            [sys.executable, transcribe_script, meeting_folder],
-            step_desc
+            [sys.executable, "transcribe.py", meeting_folder],
+            "Step 1/4: Transcribing audio with Deepgram API"
         )
-        
+
         if not step1:
-            print("\n[ERROR] Transcription failed. Please check the error above.")
+            print("\n[ERROR] Deepgram transcription failed. Please check the error above.")
             sys.exit(1)
-    
-    # Step 2: Sync corrections from global transcript (if exists)
+
+    # ----------------------------------------------------------------
+    # Step 1b — Whisper confidence scoring
+    #   Runs fine-tuned Whisper on each participant WAV, aligns output
+    #   to Deepgram words, and overwrites confidence scores in the JSON.
+    #   Deepgram timestamps (start, end) are never modified.
+    # ----------------------------------------------------------------
+    step1b = run_command(
+        [sys.executable, "whisper_confidence_scorer.py", meeting_folder],
+        "Step 1b/4: Scoring word confidence with fine-tuned Whisper"
+    )
+
+    if not step1b:
+        print("\n[!] Whisper confidence scoring had issues. "
+              "Deepgram confidence scores will be used as fallback.")
+
+    # ----------------------------------------------------------------
+    # Step 2/4 — Sync corrections from global transcript
+    # ----------------------------------------------------------------
     global_transcript = meeting_path / "global_transcript" / f"{meeting_folder}_speaker_attributed.txt"
     if global_transcript.exists():
         print(f"\n{'='*60}")
@@ -183,36 +182,38 @@ def main():
         try:
             sync_corrections(meeting_path, verbose=False, dry_run=False)
             print("[OK] Corrections synced successfully")
-            step2_sync = True
         except Exception as e:
             print(f"[!] Warning: Sync failed - {e}")
-            step2_sync = False
     else:
         print(f"\n{'='*60}")
         print("Step 2/4: Syncing corrections from global transcript")
         print(f"{'='*60}")
         print("[!] No global transcript found, skipping sync")
-        step2_sync = True
-    
-    # Step 3: Run phoneme-based pronunciation detection
+
+    # ----------------------------------------------------------------
+    # Step 3/4 — Phoneme-based pronunciation detection
+    #   Uses the Whisper confidence scores written in Step 1b.
+    # ----------------------------------------------------------------
     step3 = run_command(
         [sys.executable, "phoneme_pronunciation_detector.py", meeting_folder],
-        "Step 3/4: Detecting pronunciation errors (phoneme comparison)"
+        "Step 3/4: Detecting pronunciation errors (phoneme comparison + Whisper confidence)"
     )
-    
+
     if not step3:
         print("\n[!] Pronunciation detection had issues, but continuing...")
-    
-    # Step 4: Update summary for web compatibility
+
+    # ----------------------------------------------------------------
+    # Step 4/4 — Build web-ready summary JSON
+    # ----------------------------------------------------------------
     step4 = run_command(
         [sys.executable, "update_pronunciation_summary.py", meeting_folder],
         "Step 4/4: Preparing data for web visualization"
     )
-    
+
     if not step4:
         print("\n[ERROR] Summary update failed. Please check the error above.")
         sys.exit(1)
-    
+
     # Final summary
     print(f"\n{'='*60}")
     print("PROCESSING COMPLETE!")

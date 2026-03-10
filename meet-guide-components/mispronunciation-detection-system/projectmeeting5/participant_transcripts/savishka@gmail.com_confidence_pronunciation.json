@@ -1,0 +1,172 @@
+{
+  "participant": "savishka@gmail.com",
+  "total_words": 113,
+  "errors_found": 15,
+  "errors": [
+    {
+      "word": "task",
+      "confidence": 0.7158203,
+      "start_time": 26.1,
+      "end_time": 26.58,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.716",
+      "context": "I agree the task themselves aren't too",
+      "expected_phonemes": "T AE S K"
+    },
+    {
+      "word": "difficult",
+      "confidence": 0.79052734,
+      "start_time": 27.86,
+      "end_time": 28.36,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.791",
+      "context": "themselves aren't too difficult but when multiple",
+      "expected_phonemes": "D IH F AH K AH L T"
+    },
+    {
+      "word": "come",
+      "confidence": 0.58203125,
+      "start_time": 30.1,
+      "end_time": 30.34,
+      "error_type": "low_confidence",
+      "severity": "high",
+      "details": "ASR confidence: 0.582",
+      "context": "when multiple updates come in together it",
+      "expected_phonemes": "K AH M"
+    },
+    {
+      "word": "pushed",
+      "confidence": 0.6640625,
+      "start_time": 52.670002,
+      "end_time": 52.99,
+      "error_type": "low_confidence",
+      "severity": "high",
+      "details": "ASR confidence: 0.664",
+      "context": "Yeah and it pushed us into constant",
+      "expected_phonemes": "P UH SH T"
+    },
+    {
+      "word": "Honestly",
+      "confidence": 0.7590332,
+      "start_time": 74.245,
+      "end_time": 74.745,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.759",
+      "context": "short term but Honestly I appreciate that",
+      "expected_phonemes": "AA N AH S T L IY"
+    },
+    {
+      "word": "breakdown",
+      "confidence": 0.7973633,
+      "start_time": 94.314995,
+      "end_time": 94.814995,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.797",
+      "context": "improve the task breakdown set explore set",
+      "expected_phonemes": "B R EY K D AW N"
+    },
+    {
+      "word": "explore",
+      "confidence": 0.31518555,
+      "start_time": 96.314995,
+      "end_time": 96.395,
+      "error_type": "low_confidence",
+      "severity": "high",
+      "details": "ASR confidence: 0.315",
+      "context": "task breakdown set explore set clear a",
+      "expected_phonemes": "IH K S P L AO R"
+    },
+    {
+      "word": "clear",
+      "confidence": 0.7114258,
+      "start_time": 97.034996,
+      "end_time": 97.354996,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.711",
+      "context": "set explore set clear a milestone and",
+      "expected_phonemes": "K L IH R"
+    },
+    {
+      "word": "run",
+      "confidence": 0.796875,
+      "start_time": 122.295,
+      "end_time": 122.615,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.797",
+      "context": "really helps everything run smoothly Sounds good",
+      "expected_phonemes": "R AH N"
+    },
+    {
+      "word": "multiple",
+      "confidence": 1.0,
+      "start_time": 29.14,
+      "end_time": 29.64,
+      "error_type": "complex_word",
+      "severity": "low",
+      "details": "3 syllables, 8 phonemes, complexity=4.0",
+      "context": "difficult but when multiple updates come in",
+      "expected_phonemes": "M AH L T AH P AH L"
+    },
+    {
+      "word": "appreciate",
+      "confidence": 0.9980469,
+      "start_time": 76.005,
+      "end_time": 76.505,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "4 syllables, 8 phonemes, complexity=6.5",
+      "context": "but Honestly I appreciate that because everyone",
+      "expected_phonemes": "AH P R IY SH IY EY T"
+    },
+    {
+      "word": "confusing",
+      "confidence": 1.0,
+      "start_time": 109.56,
+      "end_time": 110.06,
+      "error_type": "complex_word",
+      "severity": "low",
+      "details": "3 syllables, 9 phonemes, complexity=4.5",
+      "context": "starts to feel confusing or too heavy",
+      "expected_phonemes": "K AH N F Y UW Z IH NG"
+    },
+    {
+      "word": "communication",
+      "confidence": 1.0,
+      "start_time": 120.615,
+      "end_time": 121.115,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "5 syllables, 12 phonemes, complexity=6.5",
+      "context": "quickly Agreed open communication really helps everything",
+      "expected_phonemes": "K AH M Y UW N AH K EY SH AH N"
+    },
+    {
+      "word": "everything",
+      "confidence": 0.8935547,
+      "start_time": 121.895,
+      "end_time": 122.295,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "3 syllables, 7 phonemes, complexity=5.0",
+      "context": "communication really helps everything run smoothly Sounds",
+      "expected_phonemes": "EH V R IY TH IH NG"
+    },
+    {
+      "word": "appreciate",
+      "confidence": 0.98844403,
+      "start_time": 139.79001,
+      "end_time": 140.29001,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "4 syllables, 8 phonemes, complexity=6.5",
+      "context": "updates ready perfect appreciate you both",
+      "expected_phonemes": "AH P R IY SH IY EY T"
+    }
+  ]
+}

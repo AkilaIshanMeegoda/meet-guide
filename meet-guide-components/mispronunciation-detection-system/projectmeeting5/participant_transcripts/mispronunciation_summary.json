@@ -1,0 +1,48 @@
+{
+  "meeting": "projectmeeting5",
+  "total_participants": 4,
+  "analyzed_participants": 4,
+  "participants": {
+    "akila@gmail.com": {
+      "status": "success",
+      "total_words": 0,
+      "errors_detected": 0,
+      "accuracy": 1.0,
+      "sources": [
+        "confidence"
+      ]
+    },
+    "chalana@gmail.com": {
+      "status": "success",
+      "total_words": 114,
+      "errors_detected": 12,
+      "accuracy": 0.8947368421052632,
+      "sources": [
+        "confidence"
+      ]
+    },
+    "dinithi@gmail.com": {
+      "status": "success",
+      "total_words": 18,
+      "errors_detected": 4,
+      "accuracy": 0.7777777777777778,
+      "sources": [
+        "confidence"
+      ]
+    },
+    "savishka@gmail.com": {
+      "status": "success",
+      "total_words": 113,
+      "errors_detected": 15,
+      "accuracy": 0.8672566371681416,
+      "sources": [
+        "confidence"
+      ]
+    }
+  },
+  "overall_stats": {
+    "total_words": 245,
+    "total_errors": 31,
+    "average_accuracy": 0.8734693877551021
+  }
+}

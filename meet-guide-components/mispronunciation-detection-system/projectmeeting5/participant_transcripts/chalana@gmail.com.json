@@ -1,0 +1,913 @@
+{
+  "transcript": "Thanks for joining the meeting every I just want to do a quick overview and make sure we are all on the same page with the project goals That's unstable and I appreciate you both being honest it sounds like the communication flow is there are things are getting confusing I hear you and I don't want anyone to just keep up with the schedule Same here the team energy is still good but the real organization would really help Make it much easier to manage time and priorities Oh sure that makes communications a lot easier Cool let's step over support each other and check-in again next week Same here we will keep",
+  "metadata": {
+    "duration": 168.78,
+    "channels": 1.0,
+    "model": "nova-2"
+  },
+  "words": [
+    {
+      "word": "Thanks",
+      "start": 29.800001,
+      "end": 30.2,
+      "confidence": 0.9941406,
+      "speaker": 0
+    },
+    {
+      "word": "for",
+      "start": 30.2,
+      "end": 30.7,
+      "confidence": 0.9604492,
+      "speaker": 0
+    },
+    {
+      "word": "joining",
+      "start": 31.880001,
+      "end": 32.36,
+      "confidence": 0.9921875,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 32.36,
+      "end": 32.52,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "meeting",
+      "start": 32.52,
+      "end": 32.84,
+      "confidence": 0.7183838,
+      "speaker": 0
+    },
+    {
+      "word": "every",
+      "start": 32.84,
+      "end": 33.34,
+      "confidence": 0.96069336,
+      "speaker": 0,
+      "original_word": "everyone",
+      "corrected": true
+    },
+    {
+      "word": "I",
+      "start": 33.88,
+      "end": 34.04,
+      "confidence": 0.9941406,
+      "speaker": 0
+    },
+    {
+      "word": "just",
+      "start": 34.04,
+      "end": 34.28,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "want",
+      "start": 34.28,
+      "end": 34.52,
+      "confidence": 0.97998047,
+      "speaker": 0
+    },
+    {
+      "word": "to",
+      "start": 34.52,
+      "end": 34.68,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "do",
+      "start": 34.68,
+      "end": 34.92,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "a",
+      "start": 34.92,
+      "end": 35.08,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "quick",
+      "start": 35.08,
+      "end": 35.58,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "overview",
+      "start": 35.88,
+      "end": 36.28,
+      "confidence": 0.99609375,
+      "speaker": 0
+    },
+    {
+      "word": "and",
+      "start": 36.28,
+      "end": 36.78,
+      "confidence": 0.9790039,
+      "speaker": 0
+    },
+    {
+      "word": "make",
+      "start": 36.92,
+      "end": 37.16,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "sure",
+      "start": 37.16,
+      "end": 37.56,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "we",
+      "start": 37.56,
+      "end": 37.88,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "are",
+      "start": 37.88,
+      "end": 38.28,
+      "confidence": 0.9902344,
+      "speaker": 0
+    },
+    {
+      "word": "all",
+      "start": 38.28,
+      "end": 38.52,
+      "confidence": 0.99609375,
+      "speaker": 0
+    },
+    {
+      "word": "on",
+      "start": 38.52,
+      "end": 38.68,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 38.68,
+      "end": 38.84,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "same",
+      "start": 38.84,
+      "end": 39.08,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "page",
+      "start": 39.08,
+      "end": 39.4,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "with",
+      "start": 39.4,
+      "end": 39.56,
+      "confidence": 0.7963867,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 39.56,
+      "end": 39.72,
+      "confidence": 0.9970703,
+      "speaker": 0
+    },
+    {
+      "word": "project",
+      "start": 39.72,
+      "end": 40.12,
+      "confidence": 0.98535156,
+      "speaker": 0
+    },
+    {
+      "word": "goals",
+      "start": 40.12,
+      "end": 40.62,
+      "confidence": 0.93481445,
+      "speaker": 0
+    },
+    {
+      "word": "That's",
+      "start": 55.44,
+      "end": 55.84,
+      "confidence": 0.80078125,
+      "speaker": 0
+    },
+    {
+      "word": "unstable",
+      "start": 55.84,
+      "end": 56.34,
+      "confidence": 0.92041016,
+      "speaker": 0
+    },
+    {
+      "word": "and",
+      "start": 56.64,
+      "end": 56.8,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "I",
+      "start": 56.8,
+      "end": 57.3,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "appreciate",
+      "start": 57.52,
+      "end": 58.0,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "you",
+      "start": 58.0,
+      "end": 58.24,
+      "confidence": 0.99609375,
+      "speaker": 0
+    },
+    {
+      "word": "both",
+      "start": 58.24,
+      "end": 58.64,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "being",
+      "start": 58.64,
+      "end": 59.04,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "honest",
+      "start": 59.04,
+      "end": 59.54,
+      "confidence": 0.9975586,
+      "speaker": 0
+    },
+    {
+      "word": "it",
+      "start": 60.0,
+      "end": 60.24,
+      "confidence": 0.9604492,
+      "speaker": 0
+    },
+    {
+      "word": "sounds",
+      "start": 60.24,
+      "end": 60.56,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "like",
+      "start": 60.56,
+      "end": 61.06,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 61.44,
+      "end": 61.68,
+      "confidence": 0.6386719,
+      "speaker": 0
+    },
+    {
+      "word": "communication",
+      "start": 61.68,
+      "end": 62.18,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "flow",
+      "start": 62.56,
+      "end": 63.04,
+      "confidence": 0.9604492,
+      "speaker": 0
+    },
+    {
+      "word": "is",
+      "start": 63.04,
+      "end": 63.440002,
+      "confidence": 0.9902344,
+      "speaker": 0
+    },
+    {
+      "word": "there",
+      "start": 63.52,
+      "end": 63.760002,
+      "confidence": 0.7314453,
+      "speaker": 0
+    },
+    {
+      "word": "are",
+      "start": 63.760002,
+      "end": 63.84,
+      "confidence": 0.9970703,
+      "speaker": 0
+    },
+    {
+      "word": "things",
+      "start": 63.84,
+      "end": 64.34,
+      "confidence": 0.9921875,
+      "speaker": 0
+    },
+    {
+      "word": "are",
+      "start": 67.36,
+      "end": 67.44,
+      "confidence": 0.39624023,
+      "speaker": 0
+    },
+    {
+      "word": "getting",
+      "start": 67.44,
+      "end": 67.84,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "confusing",
+      "start": 67.84,
+      "end": 68.34,
+      "confidence": 0.7780762,
+      "speaker": 0
+    },
+    {
+      "word": "I",
+      "start": 80.165,
+      "end": 80.325,
+      "confidence": 0.9970703,
+      "speaker": 0
+    },
+    {
+      "word": "hear",
+      "start": 80.325,
+      "end": 80.725,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "you",
+      "start": 80.725,
+      "end": 81.045,
+      "confidence": 0.9165039,
+      "speaker": 0
+    },
+    {
+      "word": "and",
+      "start": 81.045,
+      "end": 81.365,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "I",
+      "start": 81.365,
+      "end": 81.524994,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "don't",
+      "start": 81.524994,
+      "end": 81.924995,
+      "confidence": 0.9995117,
+      "speaker": 0
+    },
+    {
+      "word": "want",
+      "start": 81.924995,
+      "end": 82.165,
+      "confidence": 0.9970703,
+      "speaker": 0
+    },
+    {
+      "word": "anyone",
+      "start": 82.165,
+      "end": 82.665,
+      "confidence": 0.9951172,
+      "speaker": 0
+    },
+    {
+      "word": "to",
+      "start": 86.31,
+      "end": 86.81,
+      "confidence": 0.90478516,
+      "speaker": 0,
+      "original_word": "bernardo",
+      "corrected": true
+    },
+    {
+      "word": "just",
+      "start": 87.03,
+      "end": 87.35,
+      "confidence": 0.74902344,
+      "speaker": 0
+    },
+    {
+      "word": "keep",
+      "start": 87.35,
+      "end": 87.67,
+      "confidence": 0.99316406,
+      "speaker": 0
+    },
+    {
+      "word": "up",
+      "start": 87.67,
+      "end": 87.909996,
+      "confidence": 0.9951172,
+      "speaker": 0
+    },
+    {
+      "word": "with",
+      "start": 87.909996,
+      "end": 88.07,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 88.07,
+      "end": 88.229996,
+      "confidence": 0.9892578,
+      "speaker": 0
+    },
+    {
+      "word": "schedule",
+      "start": 88.229996,
+      "end": 88.729996,
+      "confidence": 0.9836426,
+      "speaker": 0
+    },
+    {
+      "word": "Same",
+      "start": 105.604996,
+      "end": 105.84499,
+      "confidence": 0.8071289,
+      "speaker": 0
+    },
+    {
+      "word": "here",
+      "start": 105.84499,
+      "end": 106.16499,
+      "confidence": 0.93847656,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 106.16499,
+      "end": 106.405,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "team",
+      "start": 106.405,
+      "end": 106.645,
+      "confidence": 0.9941406,
+      "speaker": 0
+    },
+    {
+      "word": "energy",
+      "start": 106.645,
+      "end": 107.045,
+      "confidence": 0.27929688,
+      "speaker": 0,
+      "original_word": "manager",
+      "corrected": true
+    },
+    {
+      "word": "is",
+      "start": 107.045,
+      "end": 107.284996,
+      "confidence": 0.9873047,
+      "speaker": 0
+    },
+    {
+      "word": "still",
+      "start": 107.284996,
+      "end": 107.524994,
+      "confidence": 0.9394531,
+      "speaker": 0
+    },
+    {
+      "word": "good",
+      "start": 107.524994,
+      "end": 107.765,
+      "confidence": 0.97094727,
+      "speaker": 0
+    },
+    {
+      "word": "but",
+      "start": 107.765,
+      "end": 108.265,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "the",
+      "start": 108.725,
+      "end": 108.80499,
+      "confidence": 0.98535156,
+      "speaker": 0
+    },
+    {
+      "word": "real",
+      "start": 108.80499,
+      "end": 109.125,
+      "confidence": 0.90234375,
+      "speaker": 0
+    },
+    {
+      "word": "organization",
+      "start": 109.125,
+      "end": 109.625,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "would",
+      "start": 110.085,
+      "end": 110.485,
+      "confidence": 0.7988281,
+      "speaker": 0
+    },
+    {
+      "word": "really",
+      "start": 110.485,
+      "end": 110.80499,
+      "confidence": 0.93115234,
+      "speaker": 0
+    },
+    {
+      "word": "help",
+      "start": 110.80499,
+      "end": 111.30499,
+      "confidence": 0.861084,
+      "speaker": 0
+    },
+    {
+      "word": "Make",
+      "start": 121.3,
+      "end": 121.54,
+      "confidence": 0.9873047,
+      "speaker": 0
+    },
+    {
+      "word": "it",
+      "start": 121.54,
+      "end": 121.78,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "much",
+      "start": 121.78,
+      "end": 122.020004,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "easier",
+      "start": 122.020004,
+      "end": 122.5,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "to",
+      "start": 122.5,
+      "end": 122.66,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "manage",
+      "start": 122.66,
+      "end": 123.16,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "time",
+      "start": 124.98,
+      "end": 125.22,
+      "confidence": 0.95410156,
+      "speaker": 0
+    },
+    {
+      "word": "and",
+      "start": 125.22,
+      "end": 125.54,
+      "confidence": 0.9819336,
+      "speaker": 0
+    },
+    {
+      "word": "priorities",
+      "start": 125.94,
+      "end": 126.44,
+      "confidence": 0.99609375,
+      "speaker": 0
+    },
+    {
+      "word": "Oh",
+      "start": 138.875,
+      "end": 139.035,
+      "confidence": 0.5620117,
+      "speaker": 0,
+      "original_word": "for",
+      "corrected": true
+    },
+    {
+      "word": "sure",
+      "start": 139.035,
+      "end": 139.435,
+      "confidence": 0.73950195,
+      "speaker": 0
+    },
+    {
+      "word": "that",
+      "start": 139.435,
+      "end": 139.675,
+      "confidence": 1.0,
+      "speaker": 0
+    },
+    {
+      "word": "makes",
+      "start": 139.675,
+      "end": 139.995,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "communications",
+      "start": 139.995,
+      "end": 140.495,
+      "confidence": 0.8935547,
+      "speaker": 0
+    },
+    {
+      "word": "a",
+      "start": 140.795,
+      "end": 140.875,
+      "confidence": 0.9394531,
+      "speaker": 0
+    },
+    {
+      "word": "lot",
+      "start": 140.875,
+      "end": 141.19499,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "easier",
+      "start": 141.19499,
+      "end": 141.69499,
+      "confidence": 0.9650879,
+      "speaker": 0
+    },
+    {
+      "word": "Cool",
+      "start": 147.03,
+      "end": 147.26999,
+      "confidence": 0.86083984,
+      "speaker": 0
+    },
+    {
+      "word": "let's",
+      "start": 147.26999,
+      "end": 147.75,
+      "confidence": 0.9855957,
+      "speaker": 0
+    },
+    {
+      "word": "step",
+      "start": 147.75,
+      "end": 148.06999,
+      "confidence": 0.69091797,
+      "speaker": 0
+    },
+    {
+      "word": "over",
+      "start": 148.06999,
+      "end": 148.39,
+      "confidence": 0.66015625,
+      "speaker": 0
+    },
+    {
+      "word": "support",
+      "start": 148.39,
+      "end": 148.87,
+      "confidence": 0.9980469,
+      "speaker": 0
+    },
+    {
+      "word": "each",
+      "start": 148.87,
+      "end": 149.11,
+      "confidence": 0.91259766,
+      "speaker": 0
+    },
+    {
+      "word": "other",
+      "start": 149.11,
+      "end": 149.43,
+      "confidence": 0.8251953,
+      "speaker": 0
+    },
+    {
+      "word": "and",
+      "start": 149.43,
+      "end": 149.75,
+      "confidence": 0.99902344,
+      "speaker": 0
+    },
+    {
+      "word": "check-in",
+      "start": 149.75,
+      "end": 150.25,
+      "confidence": 0.5185547,
+      "speaker": 0,
+      "original_word": "checking",
+      "corrected": true
+    },
+    {
+      "word": "again",
+      "start": 150.47,
+      "end": 150.79,
+      "confidence": 0.9941406,
+      "speaker": 0
+    },
+    {
+      "word": "next",
+      "start": 150.79,
+      "end": 151.11,
+      "confidence": 0.9941406,
+      "speaker": 0
+    },
+    {
+      "word": "week",
+      "start": 151.11,
+      "end": 151.61,
+      "confidence": 0.99609375,
+      "speaker": 0
+    },
+    {
+      "word": "Same",
+      "start": 158.695,
+      "end": 158.93501,
+      "confidence": 0.8496094,
+      "speaker": 0
+    },
+    {
+      "word": "here",
+      "start": 158.93501,
+      "end": 159.175,
+      "confidence": 0.97753906,
+      "speaker": 0
+    },
+    {
+      "word": "we",
+      "start": 159.175,
+      "end": 159.41501,
+      "confidence": 0.7001953,
+      "speaker": 0,
+      "original_word": "you",
+      "corrected": true
+    },
+    {
+      "word": "will",
+      "start": 159.41501,
+      "end": 159.815,
+      "confidence": 0.95166016,
+      "speaker": 0
+    },
+    {
+      "word": "keep",
+      "start": 159.815,
+      "end": 160.13501,
+      "confidence": 0.99902344,
+      "speaker": 0
+    }
+  ],
+  "paragraphs": [
+    {
+      "sentences": [
+        {
+          "text": "Thanks for joining the meeting, everyone.",
+          "start": 29.800001,
+          "end": 33.34
+        },
+        {
+          "text": "I just want to do a quick overview and make sure we are all on the same page with the project goals.",
+          "start": 33.88,
+          "end": 40.62
+        },
+        {
+          "text": "That's unstable, and I appreciate you both being honest.",
+          "start": 55.44,
+          "end": 59.54
+        },
+        {
+          "text": "It sounds like the communication flow is there are things are getting confusing.",
+          "start": 60.0,
+          "end": 68.34
+        },
+        {
+          "text": "I hear you, and I don't want anyone Bernardo just keep up with the schedule.",
+          "start": 80.165,
+          "end": 88.729996
+        }
+      ],
+      "start": 29.800001,
+      "end": 88.729996,
+      "num_words": 65.0
+    },
+    {
+      "sentences": [
+        {
+          "text": "Same here.",
+          "start": 105.604996,
+          "end": 106.16499
+        },
+        {
+          "text": "The team manager is still good, but the real organization would really help.",
+          "start": 106.16499,
+          "end": 111.30499
+        },
+        {
+          "text": "That would be make it much easier to manage time and, priorities.",
+          "start": 119.7,
+          "end": 126.44
+        },
+        {
+          "text": "For sure, that makes communications a lot easier.",
+          "start": 138.875,
+          "end": 141.69499
+        },
+        {
+          "text": "Cool.",
+          "start": 147.03,
+          "end": 147.26999
+        }
+      ],
+      "start": 105.604996,
+      "end": 147.26999,
+      "num_words": 36.0
+    },
+    {
+      "sentences": [
+        {
+          "text": "Let's step over, support each other, and checking again next week.",
+          "start": 147.26999,
+          "end": 151.61
+        },
+        {
+          "text": "Same here.",
+          "start": 158.695,
+          "end": 159.175
+        },
+        {
+          "text": "You will keep moving forward.",
+          "start": 159.175,
+          "end": 160.875
+        }
+      ],
+      "start": 147.26999,
+      "end": 160.875,
+      "num_words": 18.0
+    }
+  ],
+  "sync_metadata": {
+    "corrections_applied": true,
+    "corrections_count": 0,
+    "source": "global_transcript"
+  }
+}
