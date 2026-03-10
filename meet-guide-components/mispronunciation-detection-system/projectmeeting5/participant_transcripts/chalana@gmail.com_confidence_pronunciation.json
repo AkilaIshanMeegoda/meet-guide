@@ -1,0 +1,139 @@
+{
+  "participant": "chalana@gmail.com",
+  "total_words": 114,
+  "errors_found": 12,
+  "errors": [
+    {
+      "word": "meeting",
+      "confidence": 0.7183838,
+      "start_time": 32.52,
+      "end_time": 32.84,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.718",
+      "context": "for joining the meeting every I just",
+      "expected_phonemes": "M IY T IH NG"
+    },
+    {
+      "word": "confusing",
+      "confidence": 0.7780762,
+      "start_time": 67.84,
+      "end_time": 68.34,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.778",
+      "context": "things are getting confusing I hear you",
+      "expected_phonemes": "K AH N F Y UW Z IH NG"
+    },
+    {
+      "word": "energy",
+      "confidence": 0.27929688,
+      "start_time": 106.645,
+      "end_time": 107.045,
+      "error_type": "low_confidence",
+      "severity": "high",
+      "details": "ASR confidence: 0.279",
+      "context": "here the team energy is still good",
+      "expected_phonemes": "EH N ER JH IY"
+    },
+    {
+      "word": "sure",
+      "confidence": 0.73950195,
+      "start_time": 139.035,
+      "end_time": 139.435,
+      "error_type": "low_confidence",
+      "severity": "medium",
+      "details": "ASR confidence: 0.740",
+      "context": "and priorities Oh sure that makes communications",
+      "expected_phonemes": "SH UH R"
+    },
+    {
+      "word": "step",
+      "confidence": 0.69091797,
+      "start_time": 147.75,
+      "end_time": 148.06999,
+      "error_type": "low_confidence",
+      "severity": "high",
+      "details": "ASR confidence: 0.691",
+      "context": "easier Cool let's step over support each",
+      "expected_phonemes": "S T EH P"
+    },
+    {
+      "word": "check-in",
+      "confidence": 0.5185547,
+      "start_time": 149.75,
+      "end_time": 150.25,
+      "error_type": "low_confidence",
+      "severity": "high",
+      "details": "ASR confidence: 0.519",
+      "context": "each other and check-in again next week",
+      "expected_phonemes": "unknown"
+    },
+    {
+      "word": "unstable",
+      "confidence": 0.92041016,
+      "start_time": 55.84,
+      "end_time": 56.34,
+      "error_type": "complex_word",
+      "severity": "low",
+      "details": "3 syllables, 8 phonemes, complexity=4.0",
+      "context": "project goals That's unstable and I appreciate",
+      "expected_phonemes": "AH N S T EY B AH L"
+    },
+    {
+      "word": "appreciate",
+      "confidence": 1.0,
+      "start_time": 57.52,
+      "end_time": 58.0,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "4 syllables, 8 phonemes, complexity=6.5",
+      "context": "unstable and I appreciate you both being",
+      "expected_phonemes": "AH P R IY SH IY EY T"
+    },
+    {
+      "word": "communication",
+      "confidence": 0.99902344,
+      "start_time": 61.68,
+      "end_time": 62.18,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "5 syllables, 12 phonemes, complexity=6.5",
+      "context": "sounds like the communication flow is there",
+      "expected_phonemes": "K AH M Y UW N AH K EY SH AH N"
+    },
+    {
+      "word": "organization",
+      "confidence": 0.9980469,
+      "start_time": 109.125,
+      "end_time": 109.625,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "5 syllables, 11 phonemes, complexity=6.5",
+      "context": "but the real organization would really help",
+      "expected_phonemes": "AO R G AH N AH Z EY SH AH N"
+    },
+    {
+      "word": "priorities",
+      "confidence": 0.99609375,
+      "start_time": 125.94,
+      "end_time": 126.44,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "4 syllables, 9 phonemes, complexity=6.0",
+      "context": "manage time and priorities Oh sure that",
+      "expected_phonemes": "P R AY AO R AH T IY Z"
+    },
+    {
+      "word": "communications",
+      "confidence": 0.8935547,
+      "start_time": 139.995,
+      "end_time": 140.495,
+      "error_type": "complex_word",
+      "severity": "medium",
+      "details": "5 syllables, 13 phonemes, complexity=6.5",
+      "context": "sure that makes communications a lot easier",
+      "expected_phonemes": "K AH M Y UW N AH K EY SH AH N Z"
+    }
+  ]
+}

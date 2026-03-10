@@ -1,0 +1,105 @@
+{
+  "speaker_mapping": {
+    "0": "Chalana",
+    "1": "Savishka"
+  },
+  "utterances": [
+    {
+      "speaker": "Chalana",
+      "text": "Thanks for joining the meeting every month I just want to do a quick overview, and make sure we are all on the same page with the project goals.",
+      "start": 105.265,
+      "end": 116.68
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Yeah overall things are moving forward, but honestly some of the data science is I agree the task themselves aren't too difficult, but when multiple updates come in together it gets harder to stay focused.",
+      "start": 116.68,
+      "end": 119.899994
+    },
+    {
+      "speaker": "Chalana",
+      "text": "That's unstable and I appreciate you both being honest it sounds like the communication flow is there are things are getting confusing.",
+      "start": 130.895,
+      "end": 123.135
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Yeah and it pushed us into constant work mode which is okay short term, but.",
+      "start": 149.38501,
+      "end": 123.615005
+    },
+    {
+      "speaker": "Chalana",
+      "text": "I hear you, and I don't want anyone to feel, but I'll just keep up with the schedule.",
+      "start": 155.545,
+      "end": 134.41501
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Honestly, I appreciate that, because everyone is trying their best, but we also need some brands.",
+      "start": 172.0,
+      "end": 138.45
+    },
+    {
+      "speaker": "Chalana",
+      "text": "Same here the team energy is still good, but the real organization would really help.",
+      "start": 181.065,
+      "end": 150.66501
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Alright, here what we will do I will improve the task breakdown set explore set clear a milestone, and.",
+      "start": 187.065,
+      "end": 178.31999
+    },
+    {
+      "speaker": "Chalana",
+      "text": "Make it much easier to manage time, and priorities.",
+      "start": 196.95,
+      "end": 134.41501
+    },
+    {
+      "speaker": "Savishka",
+      "text": "And if something starts to feel confusing or too heavy please say something early, so we can fix it quickly.",
+      "start": 205.245,
+      "end": 205.72499
+    },
+    {
+      "speaker": "Chalana",
+      "text": "Oh sure that makes communications a lot easier.",
+      "start": 214.28499,
+      "end": 138.45
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Agreed open communication really helps everything run smoothly.",
+      "start": 217.38,
+      "end": 150.185
+    },
+    {
+      "speaker": "Chalana",
+      "text": "Cool let's step over support each other, and check-in again next week.",
+      "start": 222.58,
+      "end": 183.725
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Sounds good I will I will have my updates ready.",
+      "start": 228.42,
+      "end": 177.45999
+    },
+    {
+      "speaker": "Chalana",
+      "text": "Same here we will keep.",
+      "start": 234.125,
+      "end": 133.695
+    },
+    {
+      "speaker": "Savishka",
+      "text": "Moving forward perfect appreciate you both.",
+      "start": 235.485,
+      "end": 239.025
+    }
+  ],
+  "formatted_transcript": "Chalana: Thanks for joining the meeting every month I just want to do a quick overview, and make sure we are all on the same page with the project goals.\n\nSavishka: Yeah overall things are moving forward, but honestly some of the data science is I agree the task themselves aren't too difficult, but when multiple updates come in together it gets harder to stay focused.\n\nChalana: That's unstable and I appreciate you both being honest it sounds like the communication flow is there are things are getting confusing.\n\nSavishka: Yeah and it pushed us into constant work mode which is okay short term, but.\n\nChalana: I hear you, and I don't want anyone to feel, but I'll just keep up with the schedule.\n\nSavishka: Honestly, I appreciate that, because everyone is trying their best, but we also need some brands.\n\nChalana: Same here the team energy is still good, but the real organization would really help.\n\nSavishka: Alright, here what we will do I will improve the task breakdown set explore set clear a milestone, and.\n\nChalana: Make it much easier to manage time, and priorities.\n\nSavishka: And if something starts to feel confusing or too heavy please say something early, so we can fix it quickly.\n\nChalana: Oh sure that makes communications a lot easier.\n\nSavishka: Agreed open communication really helps everything run smoothly.\n\nChalana: Cool let's step over support each other, and check-in again next week.\n\nSavishka: Sounds good I will I will have my updates ready.\n\nChalana: Same here we will keep.\n\nSavishka: Moving forward perfect appreciate you both."
+}

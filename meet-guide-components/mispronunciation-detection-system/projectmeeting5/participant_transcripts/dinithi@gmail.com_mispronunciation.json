@@ -1,0 +1,96 @@
+{
+  "total_words": 18,
+  "errors_detected": 4,
+  "accuracy": 0.7777777777777778,
+  "errors": [
+    {
+      "word": "overall",
+      "expected": "overall",
+      "error_type": "pronunciation",
+      "severity": "medium",
+      "confidence": 0.74316406,
+      "accuracy": 0.74316406,
+      "start_time": 93.79,
+      "end_time": 94.29,
+      "expected_phonemes": [
+        "OW",
+        "V",
+        "ER",
+        "AO",
+        "L"
+      ],
+      "context": "yeah overall things are moving",
+      "suggestion": "",
+      "difficulty_reasons": [],
+      "details": "ASR confidence: 0.743",
+      "user_id": "dinithi@gmail.com",
+      "source": "confidence"
+    },
+    {
+      "word": "things",
+      "expected": "things",
+      "error_type": "pronunciation",
+      "severity": "high",
+      "confidence": 0.5078125,
+      "accuracy": 0.5078125,
+      "start_time": 94.75,
+      "end_time": 95.07,
+      "expected_phonemes": [
+        "TH",
+        "IH",
+        "NG",
+        "Z"
+      ],
+      "context": "yeah overall things are moving forward",
+      "suggestion": "",
+      "difficulty_reasons": [],
+      "details": "ASR confidence: 0.508",
+      "user_id": "dinithi@gmail.com",
+      "source": "confidence"
+    },
+    {
+      "word": "stuck",
+      "expected": "stuck",
+      "error_type": "pronunciation",
+      "severity": "medium",
+      "confidence": 0.71972656,
+      "accuracy": 0.71972656,
+      "start_time": 99.884995,
+      "end_time": 100.384995,
+      "expected_phonemes": [
+        "S",
+        "T",
+        "AH",
+        "K"
+      ],
+      "context": "data lines are stuck it feels like",
+      "suggestion": "",
+      "difficulty_reasons": [],
+      "details": "ASR confidence: 0.720",
+      "user_id": "dinithi@gmail.com",
+      "source": "confidence"
+    },
+    {
+      "word": "feels",
+      "expected": "feels",
+      "error_type": "pronunciation",
+      "severity": "high",
+      "confidence": 0.6816406,
+      "accuracy": 0.6816406,
+      "start_time": 113.55,
+      "end_time": 113.95,
+      "expected_phonemes": [
+        "F",
+        "IY",
+        "L",
+        "Z"
+      ],
+      "context": "are stuck it feels like",
+      "suggestion": "",
+      "difficulty_reasons": [],
+      "details": "ASR confidence: 0.682",
+      "user_id": "dinithi@gmail.com",
+      "source": "confidence"
+    }
+  ]
+}

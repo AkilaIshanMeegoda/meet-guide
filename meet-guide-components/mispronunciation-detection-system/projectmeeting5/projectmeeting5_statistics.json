@@ -1,0 +1,80 @@
+﻿{
+  "meeting_id": "projectmeeting5",
+  "meeting_start": "2025-12-31T17:01:16.544Z",
+  "total_duration_sec": 252.34,
+  "total_duration_formatted": "00:04:12.340",
+  "participant_count": 4,
+  "participants": {
+    "akila@gmail.com": {
+      "total_time_sec": 242.672,
+      "total_time_formatted": "00:04:02.671",
+      "percentage": 96.2,
+      "segments": [
+        {
+          "start_sec": 0.506,
+          "start_formatted": "00:00:00.506",
+          "end_sec": 243.178,
+          "end_formatted": "00:04:03.177",
+          "duration_sec": 242.672
+        }
+      ],
+      "recording_file": "Rec_projectmeeting5_Z9zLN-33JSC5B6YEAAAh_akila_2025-12-31T17-01-17.webm"
+    },
+    "dinithi@gmail.com": {
+      "total_time_sec": 228.612,
+      "total_time_formatted": "00:03:48.611",
+      "percentage": 90.6,
+      "segments": [
+        {
+          "start_sec": 23.725,
+          "start_formatted": "00:00:23.725",
+          "end_sec": 252.337,
+          "end_formatted": "00:04:12.336",
+          "duration_sec": 228.612
+        }
+      ],
+      "recording_file": "Rec_projectmeeting5_wl7kTC9tXPqtJTMVAAAj_Dinithi_2025-12-31T17-01-40.webm"
+    },
+    "chalana@gmail.com": {
+      "total_time_sec": 169.898,
+      "total_time_formatted": "00:02:49.897",
+      "percentage": 67.3,
+      "segments": [
+        {
+          "start_sec": 75.458,
+          "start_formatted": "00:01:15.457",
+          "end_sec": 245.356,
+          "end_formatted": "00:04:05.355",
+          "duration_sec": 169.898
+        }
+      ],
+      "recording_file": "Rec_projectmeeting5_UijdnY3pBlFjCkUSAAAl_Chalana_2025-12-31T17-02-31.webm"
+    },
+    "savishka@gmail.com": {
+      "total_time_sec": 149.102,
+      "total_time_formatted": "00:02:29.101",
+      "percentage": 59.1,
+      "segments": [
+        {
+          "start_sec": 97.741,
+          "start_formatted": "00:01:37.740",
+          "end_sec": 246.843,
+          "end_formatted": "00:04:06.842",
+          "duration_sec": 149.102
+        }
+      ],
+      "recording_file": "Rec_projectmeeting5_v5dQHzY9KwLaYSw6AAAn_Savishka_2025-12-31T17-02-55.webm"
+    }
+  },
+  "total_speaking_time_sec": 790.284,
+  "overlap_time_sec": 223.118,
+  "silence_gaps": [
+    {
+      "start_sec": 0,
+      "start_formatted": "00:00:00.000",
+      "end_sec": 0.506,
+      "end_formatted": "00:00:00.506",
+      "duration_sec": 0.506
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "room_id": "projectmeeting5",
+  "meeting_start_time": 1767200476544,
+  "meeting_start_iso": "2025-12-31T17:01:16.544Z",
+  "total_duration_ms": 252340,
+  "total_duration_sec": "252.340",
+  "event_count": 14,
+  "events": [
+    {
+      "event_type": "meeting_start",
+      "timestamp_abs": 1767200476544,
+      "timestamp_rel_ms": 0,
+      "timestamp_rel_sec": "0.000",
+      "iso_time": "2025-12-31T17:01:16.544Z",
+      "room_id": "projectmeeting5"
+    },
+    {
+      "event_type": "user_join",
+      "timestamp_abs": 1767200476601,
+      "timestamp_rel_ms": 57,
+      "timestamp_rel_sec": "0.057",
+      "iso_time": "2025-12-31T17:01:16.601Z",
+      "user_id": "Z9zLN-33JSC5B6YEAAAh",
+      "user_name": "akila",
+      "peer_info": {
+        "peer_uuid": "93f451d8-8447-4f90-9fec-414512cd5cc4",
+        "os_name": "Windows",
+        "browser_name": "Chrome"
+      }
+    },
+    {
+      "event_type": "recording_start",
+      "timestamp_abs": 1767200477050,
+      "timestamp_rel_ms": 506,
+      "timestamp_rel_sec": "0.506",
+      "iso_time": "2025-12-31T17:01:17.050Z",
+      "user_id": "Z9zLN-33JSC5B6YEAAAh",
+      "user_name": "akila",
+      "producer_id": "81947207-674b-40fb-8052-5c4bfc0ffaad",
+      "audio_file": null
+    },
+    {
+      "event_type": "user_join",
+      "timestamp_abs": 1767200498463,
+      "timestamp_rel_ms": 21919,
+      "timestamp_rel_sec": "21.919",
+      "iso_time": "2025-12-31T17:01:38.463Z",
+      "user_id": "wl7kTC9tXPqtJTMVAAAj",
+      "user_name": "Dinithi",
+      "peer_info": {
+        "peer_uuid": "81bea551-0864-4a62-826f-67cd4ecc67e2",
+        "os_name": "Windows",
+        "browser_name": "Chrome"
+      }
+    },
+    {
+      "event_type": "recording_start",
+      "timestamp_abs": 1767200500269,
+      "timestamp_rel_ms": 23725,
+      "timestamp_rel_sec": "23.725",
+      "iso_time": "2025-12-31T17:01:40.269Z",
+      "user_id": "wl7kTC9tXPqtJTMVAAAj",
+      "user_name": "Dinithi",
+      "producer_id": "4ca6000e-535c-4e25-9cac-3b8650700c99",
+      "audio_file": null
+    },
+    {
+      "event_type": "user_join",
+      "timestamp_abs": 1767200549528,
+      "timestamp_rel_ms": 72984,
+      "timestamp_rel_sec": "72.984",
+      "iso_time": "2025-12-31T17:02:29.528Z",
+      "user_id": "UijdnY3pBlFjCkUSAAAl",
+      "user_name": "Chalana",
+      "peer_info": {
+        "peer_uuid": "80dccde1-4356-4bec-bec8-9434d80ab040",
+        "os_name": "Windows",
+        "browser_name": "Chrome"
+      }
+    },
+    {
+      "event_type": "recording_start",
+      "timestamp_abs": 1767200552002,
+      "timestamp_rel_ms": 75458,
+      "timestamp_rel_sec": "75.458",
+      "iso_time": "2025-12-31T17:02:32.002Z",
+      "user_id": "UijdnY3pBlFjCkUSAAAl",
+      "user_name": "Chalana",
+      "producer_id": "7286139c-2c52-4479-8cce-db7668c430a9",
+      "audio_file": null
+    },
+    {
+      "event_type": "user_join",
+      "timestamp_abs": 1767200569343,
+      "timestamp_rel_ms": 92799,
+      "timestamp_rel_sec": "92.799",
+      "iso_time": "2025-12-31T17:02:49.343Z",
+      "user_id": "v5dQHzY9KwLaYSw6AAAn",
+      "user_name": "Savishka",
+      "peer_info": {
+        "peer_uuid": "5e1f4b0a-bad3-49df-8136-1de8c45eb2be",
+        "os_name": "Windows",
+        "browser_name": "Chrome"
+      }
+    },
+    {
+      "event_type": "recording_start",
+      "timestamp_abs": 1767200574285,
+      "timestamp_rel_ms": 97741,
+      "timestamp_rel_sec": "97.741",
+      "iso_time": "2025-12-31T17:02:54.285Z",
+      "user_id": "v5dQHzY9KwLaYSw6AAAn",
+      "user_name": "Savishka",
+      "producer_id": "93e9edf0-22be-4c68-bb84-38e2601e4f92",
+      "audio_file": null
+    },
+    {
+      "event_type": "user_leave",
+      "timestamp_abs": 1767200719722,
+      "timestamp_rel_ms": 243178,
+      "timestamp_rel_sec": "243.178",
+      "iso_time": "2025-12-31T17:05:19.722Z",
+      "user_id": "Z9zLN-33JSC5B6YEAAAh",
+      "user_name": "akila",
+      "reason": "peer_removed"
+    },
+    {
+      "event_type": "user_leave",
+      "timestamp_abs": 1767200721900,
+      "timestamp_rel_ms": 245356,
+      "timestamp_rel_sec": "245.356",
+      "iso_time": "2025-12-31T17:05:21.900Z",
+      "user_id": "UijdnY3pBlFjCkUSAAAl",
+      "user_name": "Chalana",
+      "reason": "peer_removed"
+    },
+    {
+      "event_type": "user_leave",
+      "timestamp_abs": 1767200723387,
+      "timestamp_rel_ms": 246843,
+      "timestamp_rel_sec": "246.843",
+      "iso_time": "2025-12-31T17:05:23.387Z",
+      "user_id": "v5dQHzY9KwLaYSw6AAAn",
+      "user_name": "Savishka",
+      "reason": "peer_removed"
+    },
+    {
+      "event_type": "user_leave",
+      "timestamp_abs": 1767200728881,
+      "timestamp_rel_ms": 252337,
+      "timestamp_rel_sec": "252.337",
+      "iso_time": "2025-12-31T17:05:28.881Z",
+      "user_id": "wl7kTC9tXPqtJTMVAAAj",
+      "user_name": "Dinithi",
+      "reason": "peer_removed"
+    },
+    {
+      "event_type": "meeting_end",
+      "timestamp_abs": 1767200728883,
+      "timestamp_rel_ms": 252339,
+      "timestamp_rel_sec": "252.339",
+      "iso_time": "2025-12-31T17:05:28.883Z",
+      "reason": "room_closed",
+      "total_duration_ms": 252339,
+      "total_duration_sec": "252.339"
+    }
+  ]
+}
