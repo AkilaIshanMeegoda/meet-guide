@@ -62,7 +62,7 @@ const Card = ({ meeting }: MeetingCardProps) => {
       </div>
 
       {/* Action Button */}
-      <Link href={`/meetings/${meeting.id}`}>
+      <Link href={meeting.status === 'upcoming' ? `/meetings/${meeting.id}/room` : `/meetings/${meeting.id}`}>
         <button
           className={`text-xs px-4 py-2 rounded-md cursor-pointer ${
             meeting.status === 'upcoming'

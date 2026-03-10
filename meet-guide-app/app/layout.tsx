@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -10,7 +11,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "MeetGuide - Your AI Meeting Companion",
-  description: "Enhance your meetings with AI-powered insights, action items, and pronunciation coaching.",
+  description: "Enhance your meetings with AI-powered insights, action items, and pronunciation feedback.",
 };
 
 export default function RootLayout({
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

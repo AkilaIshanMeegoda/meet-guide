@@ -325,6 +325,11 @@ class PhonemePronunciationDetector:
                 phoneme_errors = self._compare_phonemes(asr_words, mfa_words)
                 errors.extend(phoneme_errors)
         
+        # Method 3: Complexity-based detection (algorithmic)
+        complexity_errors = self._detect_complex_words(asr_words, 
+                                                        {e['word'].lower() for e in errors})
+        errors.extend(complexity_errors)
+        
         # Remove duplicates
         seen = set()
         unique_errors = []

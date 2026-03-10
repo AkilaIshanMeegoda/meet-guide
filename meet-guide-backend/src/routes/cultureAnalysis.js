@@ -9,6 +9,35 @@ const CultureAnalysis = require("../models/CultureAnalysis");
 const cultureAnalysisWatcher = require("../services/cultureAnalysisWatcher");
 
 /**
+ * POST /api/culture-analysis/internal/:meetingId
+ * Internal endpoint for automated pipeline use (no auth required).
+ * Called by the meeting-processor service after summarization completes.
+ */
+router.post("/internal/:meetingId", async (req, res) => {
+  try {
+    const { meetingId } = req.params;
+    const force = req.query.force === "true";
+
+    const analysis = await analyzeMeetingCulture(meetingId, { force });
+
+    res.json({
+      success: true,
+      message:
+        analysis.status === "completed"
+          ? "Culture analysis completed successfully"
+          : "Culture analysis triggered but did not complete successfully",
+      data: analysis,
+    });
+  } catch (error) {
+    console.error("Internal culture analysis error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to analyze meeting culture",
+    });
+  }
+});
+
+/**
  * POST /api/culture-analysis/:meetingId
  * Trigger culture analysis for a meeting using HuggingFace LLM.
  * Optional query: ?force=true to re-run even if completed.

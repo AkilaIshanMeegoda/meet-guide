@@ -574,6 +574,7 @@ def generate_speaker_attributed_transcript(
     current_speaker = None
     current_words = []
     current_start = None
+    current_end = None
     
     for word_info in words:
         speaker_id = word_info.get("speaker")
@@ -586,15 +587,17 @@ def generate_speaker_attributed_transcript(
                     "speaker": speaker_mapping.get(current_speaker, f"Speaker {current_speaker}"),
                     "text": " ".join(current_words),
                     "start": current_start,
-                    "end": words[len(utterances) * len(current_words) - 1].get("end") if utterances else word_info.get("start")
+                    "end": current_end
                 })
             
             # Start new utterance
             current_speaker = speaker_id
             current_words = [word_info["word"]]
             current_start = word_info.get("start")
+            current_end = word_info.get("end")
         else:
             current_words.append(word_info["word"])
+            current_end = word_info.get("end")
     
     # Add last utterance
     if current_words:

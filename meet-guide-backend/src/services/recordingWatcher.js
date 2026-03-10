@@ -12,8 +12,10 @@ const processMeetingService = require("./processMeetingService");
 const pronunciationService = require("./pronunciationService");
 const hybridDetectionService = require("./hybridDetectionService");
 const summarizationService = require("./summarizationService");
+const cultureAnalysisService = require("./cultureAnalysisService");
 const HybridDetection = require("../models/HybridDetection");
 const MeetingSummarization = require("../models/MeetingSummarization");
+const CultureAnalysis = require("../models/CultureAnalysis");
 
 // Paths to watch
 const MIROTALK_RECORDINGS_PATH =
@@ -85,6 +87,9 @@ class RecordingWatcher {
 
     // Scan database for meetings with transcripts but missing summarization
     this.scanDatabaseForMissingSummarization();
+
+    // Scan database for meetings with transcripts but missing culture analysis
+    this.scanDatabaseForMissingCultureAnalysis();
   }
 
   /**
@@ -281,7 +286,6 @@ class RecordingWatcher {
             await summarizationService.processMeetingSummarization(meetingId);
 
           if (summaryResult.success) {
-            summarization: "triggered";
             console.log(
               `[RecordingWatcher] Summarization complete for ${meetingId}`,
             );
@@ -295,6 +299,30 @@ class RecordingWatcher {
           console.error(
             `[RecordingWatcher] Summarization error for ${meetingId}:`,
             summaryError.message,
+          );
+        }
+
+        // Auto-trigger culture analysis after summarization
+        console.log(
+          `[RecordingWatcher] Auto-triggering culture analysis for ${meetingId}...`,
+        );
+        try {
+          const cultureResult =
+            await cultureAnalysisService.analyzeMeetingCulture(meetingId);
+
+          if (cultureResult && cultureResult.status === "completed") {
+            console.log(
+              `[RecordingWatcher] Culture analysis complete for ${meetingId}`,
+            );
+          } else {
+            console.error(
+              `[RecordingWatcher] Culture analysis did not complete for ${meetingId}: status=${cultureResult && cultureResult.status}`,
+            );
+          }
+        } catch (cultureError) {
+          console.error(
+            `[RecordingWatcher] Culture analysis error for ${meetingId}:`,
+            cultureError.message,
           );
         }
 
@@ -568,6 +596,98 @@ class RecordingWatcher {
     } catch (error) {
       console.error(
         "[RecordingWatcher] Error scanning database for summarizations:",
+        error.message,
+      );
+    }
+  }
+
+  /**
+   * Scan database for meetings that have transcripts but no culture analysis.
+   * This handles retroactive processing of existing transcripts.
+   */
+  async scanDatabaseForMissingCultureAnalysis() {
+    console.log(
+      "[RecordingWatcher] Scanning database for meetings missing culture analysis...",
+    );
+
+    try {
+      const Meeting = require("../models/Meeting");
+
+      // Get all meetings with transcripts that have enough utterances
+      const meetings = await Meeting.find({
+        "transcript.utterances": { $exists: true, $not: { $size: 0 } },
+      }).select("meeting_id transcript");
+
+      if (meetings.length === 0) {
+        console.log(
+          "[RecordingWatcher] No meetings with transcripts found in database",
+        );
+        return;
+      }
+
+      console.log(
+        `[RecordingWatcher] Found ${meetings.length} meetings with transcripts for culture analysis scan`,
+      );
+
+      let processed = 0;
+      let skipped = 0;
+      let failed = 0;
+
+      for (const meeting of meetings) {
+        const meetingId = meeting.meeting_id;
+
+        if (!meetingId) {
+          skipped++;
+          continue;
+        }
+
+        // Skip if a completed analysis already exists
+        const existing = await CultureAnalysis.findOne({
+          meeting_id: meetingId,
+          status: "completed",
+        });
+
+        if (existing) {
+          skipped++;
+          continue;
+        }
+
+        console.log(
+          `[RecordingWatcher] Processing missing culture analysis: ${meetingId}`,
+        );
+
+        try {
+          const result =
+            await cultureAnalysisService.analyzeMeetingCulture(meetingId);
+
+          if (result && result.status === "completed") {
+            processed++;
+            console.log(`[RecordingWatcher] Culture analysis done: ${meetingId}`);
+          } else {
+            failed++;
+            console.error(
+              `[RecordingWatcher] Culture analysis incomplete: ${meetingId} - status=${result && result.status}`,
+            );
+          }
+        } catch (error) {
+          failed++;
+          console.error(
+            `[RecordingWatcher] Culture analysis error for ${meetingId}:`,
+            error.message,
+          );
+        }
+
+        // Small delay to avoid hammering the HuggingFace API
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+
+      console.log("[RecordingWatcher] Culture analysis scan complete:");
+      console.log(`   Processed: ${processed}`);
+      console.log(`   Skipped (already exists): ${skipped}`);
+      console.log(`   Failed: ${failed}`);
+    } catch (error) {
+      console.error(
+        "[RecordingWatcher] Error scanning database for culture analyses:",
         error.message,
       );
     }

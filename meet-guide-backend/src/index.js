@@ -34,6 +34,7 @@ const processingRoutes = require("./routes/processing");
 const hybridDetectionRoutes = require("./routes/hybridDetection");
 const summarizationRoutes = require("./routes/summarization");
 const cultureAnalysisRoutes = require("./routes/cultureAnalysis");
+const trendAnalysisRoutes = require("./routes/trendAnalysis");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -76,6 +77,7 @@ app.use("/api/processing", processingRoutes);
 app.use("/api/hybrid-detection", hybridDetectionRoutes);
 app.use("/api/summarization", summarizationRoutes);
 app.use("/api/culture-analysis", cultureAnalysisRoutes);
+app.use("/api/trend-analysis", trendAnalysisRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
@@ -136,7 +138,7 @@ async function startServer() {
 
     // Wait for summarization server to be ready
     const { waitForSummarizationServer } = require("./services/summarizationService");
-    const isReady = await waitForSummarizationServer(100, 1000, 5000);
+    const isReady = await waitForSummarizationServer(200, 1000, 5000);
     
     if (!isReady) {
       console.warn("⚠️ Summarization server not ready, but continuing startup...");
@@ -146,6 +148,16 @@ async function startServer() {
     const recordingWatcher = require("./services/recordingWatcher");
     recordingWatcher.start();
     console.log("👁️ Recording watcher started");
+
+    // Start culture analysis watcher for automatic meeting culture analysis
+    const cultureAnalysisWatcher = require("./services/cultureAnalysisWatcher");
+    cultureAnalysisWatcher.start();
+    console.log("📊 Culture analysis watcher started");
+
+    // Start trend analysis watcher for automatic cultural trend analysis
+    const trendAnalysisWatcher = require("./services/trendAnalysisWatcher");
+    trendAnalysisWatcher.start();
+    console.log("📈 Trend analysis watcher started");
 
     // Start listening
     app.listen(PORT, "0.0.0.0", () => {

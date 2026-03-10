@@ -97,7 +97,7 @@ const meetingSchema = new mongoose.Schema({
 });
 
 // Indexes
-meetingSchema.index({ meeting_id: 1 }, { unique: true });
+// Note: meeting_id unique index is already created via { unique: true } in the field definition above
 meetingSchema.index({ host_id: 1 });
 meetingSchema.index({ 'participants.email': 1 });
 meetingSchema.index({ status: 1 });
