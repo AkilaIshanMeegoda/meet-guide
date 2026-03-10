@@ -10,17 +10,24 @@ let accessToken: string | null = null;
 
 export function setAccessToken(token: string | null) {
     accessToken = token;
-    if (token) {
-        localStorage.setItem('access_token', token);
-    } else {
-        localStorage.removeItem('access_token');
+    if (typeof window !== 'undefined') {
+        if (token) {
+            localStorage.setItem('access_token', token);
+        } else {
+            localStorage.removeItem('access_token');
+        }
     }
 }
 
 export function getAccessToken(): string | null {
-    if (accessToken) return accessToken;
+    // Always read from localStorage as the source of truth to handle
+    // module re-evaluation across route changes in Next.js App Router
     if (typeof window !== 'undefined') {
-        accessToken = localStorage.getItem('access_token');
+        const stored = localStorage.getItem('access_token');
+        if (stored) {
+            accessToken = stored; // keep in-memory cache in sync
+            return stored;
+        }
     }
     return accessToken;
 }
@@ -53,10 +60,14 @@ async function request<T>(
         console.log('API Response status:', response.status);
 
         if (response.status === 401) {
-            // Token expired or invalid
+            // Token expired or invalid - clear it
             setAccessToken(null);
+            // Only redirect to login if not already on an auth page
             if (typeof window !== 'undefined') {
-                window.location.href = '/auth/login';
+                const path = window.location.pathname;
+                if (!path.startsWith('/auth')) {
+                    window.location.href = '/auth/login';
+                }
             }
             throw new Error('Unauthorized');
         }
@@ -413,6 +424,17 @@ export const pronunciationApi = {
 
     async getAvailableMeetings(): Promise<{ success: boolean; data: Array<{ folder: string; name: string; has_data: boolean }> }> {
         return request('/pronunciation/available-meetings');
+    },
+
+    getAudioClipUrl(meetingId: string, participantEmail: string, startTime: number, endTime: number, padding?: number): string {
+        const params = new URLSearchParams({
+            start: startTime.toString(),
+            end: endTime.toString(),
+        });
+        if (padding !== undefined) {
+            params.set('padding', padding.toString());
+        }
+        return `${API_URL}/pronunciation/audio-clip/${encodeURIComponent(meetingId)}/${encodeURIComponent(participantEmail)}?${params.toString()}`;
     },
 };
 

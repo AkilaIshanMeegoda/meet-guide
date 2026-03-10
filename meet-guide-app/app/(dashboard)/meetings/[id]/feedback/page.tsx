@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { api } from '@/lib/api';
-import { Volume2, AlertTriangle } from 'lucide-react';
+import { api, getAccessToken } from '@/lib/api';
+import { Volume2, Mic, AlertTriangle } from 'lucide-react';
 
 interface MispronunciationError {
     word: string;
@@ -66,6 +66,7 @@ export default function MeetingFeedbackPage() {
     const [selectedWord, setSelectedWord] = useState<MispronunciationError | null>(null);
     const [selectedWordIndex, setSelectedWordIndex] = useState<number>(-1);
     const [severityFilter, setSeverityFilter] = useState<'all' | 'high' | 'medium' | 'low'>('all');
+    const [playingUserAudio, setPlayingUserAudio] = useState(false);
 
     useEffect(() => {
         if (!authLoading && !user) {
@@ -141,6 +142,49 @@ export default function MeetingFeedbackPage() {
             });
         } catch (err) {
             console.error('Error playing word:', err);
+        }
+    };
+
+    // Play the actual user's audio recording for a mispronounced word
+    const playUserAudioClip = async (word: MispronunciationError) => {
+        if (!word.start_time || !word.end_time || !myFeedback?.user_name || !meetingId) {
+            return;
+        }
+
+        setPlayingUserAudio(true);
+        try {
+            const url = api.pronunciation.getAudioClipUrl(
+                meetingId,
+                myFeedback.user_name,
+                word.start_time,
+                word.end_time,
+                0.3
+            );
+
+            const token = getAccessToken();
+            const response = await fetch(url, {
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
+            });
+
+            if (!response.ok) {
+                throw new Error('Audio clip not available');
+            }
+
+            const blob = await response.blob();
+            const audioUrl = URL.createObjectURL(blob);
+            const audio = new Audio(audioUrl);
+            audio.onended = () => {
+                URL.revokeObjectURL(audioUrl);
+                setPlayingUserAudio(false);
+            };
+            audio.onerror = () => {
+                URL.revokeObjectURL(audioUrl);
+                setPlayingUserAudio(false);
+            };
+            await audio.play();
+        } catch (err) {
+            console.error('Error playing user audio clip:', err);
+            setPlayingUserAudio(false);
         }
     };
 
@@ -482,6 +526,36 @@ export default function MeetingFeedbackPage() {
                                         <div className="p-6 border-b border-gray-200">
                                             <h3 className="font-semibold text-gray-900">Pronunciation Details</h3>
                                         </div>
+
+                                        {/* Your Pronunciation - Play actual user audio */}
+                                        {selectedWord.start_time > 0 && selectedWord.end_time > 0 && (
+                                            <div className="p-6 bg-red-50 border-b border-red-100">
+                                                <span className="text-xs font-semibold text-red-700 uppercase tracking-wide">
+                                                    YOUR PRONUNCIATION
+                                                </span>
+                                                <div className="mt-3 mb-4">
+                                                    <div className="text-4xl font-bold text-red-700">
+                                                        {selectedWord.word || 'Unknown'}
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center justify-between bg-white rounded-lg p-3 border border-red-200">
+                                                    <span className="text-sm text-gray-600">
+                                                        Recorded at {selectedWord.start_time.toFixed(2)}s - {selectedWord.end_time.toFixed(2)}s
+                                                    </span>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            playUserAudioClip(selectedWord);
+                                                        }}
+                                                        className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        disabled={playingUserAudio}
+                                                    >
+                                                        <Mic className="w-4 h-4" />
+                                                        {playingUserAudio ? 'Playing...' : 'Listen to Your Voice'}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Correct Pronunciation Box */}
                                         <div className="p-6 bg-green-50 border-b border-green-100">

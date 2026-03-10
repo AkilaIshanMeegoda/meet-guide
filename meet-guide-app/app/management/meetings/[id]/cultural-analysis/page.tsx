@@ -67,67 +67,55 @@ export default function CulturalAnalysisPage({ params }: PageProps) {
   const [isExporting, setIsExporting] = useState(false);
 
   const fetchAnalysis = useCallback(async () => {
-    try {
-      setError(null);
-      setErrorDetail(null);
-      const token = getAccessToken();
-      if (!token) {
-        setError("Authentication required. Please log in to view this page.");
+    setError(null);
+    setErrorDetail(null);
+    const token = getAccessToken();
+    if (!token) {
+      setError("Authentication required. Please log in to view this page.");
+      setState("failed");
+      return;
+    }
+
+    // Server actions never throw in production — they always return a structured response.
+    const response = await getCultureAnalysis(meetingId, token);
+
+    if (!response.success) {
+      const code = response.errorCode;
+      if (code === "not_found") {
+        setState("pending");
+      } else if (code === "no_transcript") {
+        setState("no-transcript");
+      } else if (code === "auth_error") {
         setState("failed");
-        return;
+        setError("Authentication required. Please log in to view this page.");
+      } else {
+        setState("failed");
+        setError("Unable to load culture analysis. Please try again later.");
+        setErrorDetail(response.message || null);
       }
+      return;
+    }
 
-      const response = await getCultureAnalysis(meetingId, token);
+    if (response.data) {
+      const { status, analysis: analysisData, error_message } = response.data;
 
-      if (response.success && response.data) {
-        const { status, analysis: analysisData, error_message } = response.data;
-
-        if (status === "completed" && analysisData) {
-          setAnalysis(analysisData);
-          setMeetingTitle(response.data.meeting_title);
-          setAnalyzedAt(
-            response.data && "analyzed_at" in response.data
-              ? (response.data as any).analyzed_at
-              : null,
-          );
-          setState("completed");
-        } else if (status === "processing") {
-          setState("processing");
-        } else if (status === "failed") {
-          setState("failed");
-          if (error_message) {
-            setErrorDetail(error_message);
-          }
-        } else {
-          // pending or other — watcher hasn't picked it up yet
-          setState("pending");
+      if (status === "completed" && analysisData) {
+        setAnalysis(analysisData);
+        setMeetingTitle(response.data.meeting_title);
+        setAnalyzedAt(response.data.analyzed_at ?? null);
+        setState("completed");
+      } else if (status === "processing") {
+        setState("processing");
+      } else if (status === "failed") {
+        setState("failed");
+        if (error_message) {
+          setErrorDetail(error_message);
         }
       } else {
-        // 404 – no analysis document found yet
         setState("pending");
       }
-    } catch (e: any) {
-      const msg = e?.message || "";
-
-      // If the backend returned 404, it means no analysis exists yet
-      if (msg.includes("No culture analysis found") || msg.includes("404")) {
-        setState("pending");
-        return;
-      }
-
-      // If transcript is missing
-      if (
-        msg.toLowerCase().includes("transcript") ||
-        msg.toLowerCase().includes("utterance")
-      ) {
-        setState("no-transcript");
-        return;
-      }
-
-      // Generic error
-      setState("failed");
-      setError("Unable to load culture analysis. Please try again later.");
-      setErrorDetail(msg);
+    } else {
+      setState("pending");
     }
   }, [meetingId]);
 

@@ -48,11 +48,6 @@ SLANG_RULES = {
     "ambiguous": [
         "vibe", "cap", "fire", "mid", "sick", "solid", "hits", "bet", "slaps", "wild",
         "crazy", "trash", "mood", "basic", "salty"
-        # "ate", "basic", "bet", "cap", "extra", "fire", "flex", "ghosting",
-        # "glow up", "green flag", "red flag", "mid", "slaps", "tea",
-        # "trash", "salty", "shook", "stan", "drip", "woke", "bop", "cancel",
-        # "mother", "slide", "mood", "hits different", "vibe", "for real",
-        # "hits", "solid", "sick"
     ],
     "unambiguous": [
         "skibidi", "rizz", "yeet", "sus", "cheugy", "simp", "finna", "gyatt",
@@ -65,7 +60,7 @@ SLANG_RULES = {
 # 4. UPDATED Hybrid Detector (Lemma + Phrase)
 # -------------------------------------------------
 class RuleBase1_WithUncertainty:
-    def __init__(self, ai_model, threshold=0.85, ambiguous_threshold=0.90):
+    def __init__(self, ai_model, threshold=0.85, ambiguous_threshold=0.60):
         self.ai_model = ai_model
         self.threshold = threshold  # For general classification
         self.ambiguous_threshold = ambiguous_threshold  # Higher threshold for ambiguous terms
@@ -170,7 +165,7 @@ class RuleBase1_WithUncertainty:
 hybrid_detector = RuleBase1_WithUncertainty(
     ai_model=clf,
     threshold=0.85,  # General threshold
-    ambiguous_threshold=0.90  # Higher threshold for ambiguous terms to reduce false positives
+    ambiguous_threshold=0.60  # Threshold for ambiguous terms (lowered to detect more Gen-Z slang)
 )
 
 print("[OK] Hybrid slang detector with lemmatization ready")

@@ -1,14 +1,22 @@
 'use client';
 
 import React from 'react';
-import { LayoutDashboard, Video, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Video, LogOut, Calendar, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuth();
   const isManagementRoute = pathname.startsWith('/management/');
   const basePath = isManagementRoute ? '/management' : '';
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/auth/login');
+  };
 
   const menuItems = [
     {
@@ -18,7 +26,13 @@ const Sidebar = () => {
       active: isManagementRoute 
         ? pathname === '/management/dashboard'
         : pathname === '/dashboard'
-    },
+    }, 
+    ...(!isManagementRoute ? [{
+      name: 'Schedule Meeting',
+      icon: Calendar,
+      href: `${basePath}/schedule-meeting`,
+      active: pathname === '/schedule-meeting' || pathname.startsWith('/schedule-meeting/')
+    }] : []),
     {
       name: 'Meetings',
       icon: Video,
@@ -28,12 +42,12 @@ const Sidebar = () => {
         : pathname === '/meetings' || pathname.startsWith('/meetings/')
     },
     {
-      name: 'Settings',
-      icon: Settings,
-      href: `${basePath}/settings`,
+      name: isManagementRoute ? 'Trend Analytics' : 'Analytics',
+      icon: BarChart3,
+      href: isManagementRoute ? `${basePath}/trend-analytics` : `${basePath}/analytics`,
       active: isManagementRoute
-        ? pathname === '/management/settings'
-        : pathname === '/settings'
+        ? pathname === '/management/trend-analytics' || pathname.startsWith('/management/trend-analytics/')
+        : pathname === '/analytics' || pathname.startsWith('/analytics/')
     }
   ];
 
@@ -70,7 +84,10 @@ const Sidebar = () => {
             );
           })}
           
-          <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
             <LogOut className="w-5 h-5" />
             <span className="text-sm font-medium">Logout</span>
           </button>

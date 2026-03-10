@@ -1,4 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/home/Header";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturesSection from "@/components/home/FeaturesSection";
@@ -11,6 +15,26 @@ import Footer from "@/components/home/Footer";
 import ScrollToTop from "@/components/home/ScrollToTop";
 
 export default function HomePage() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
+
+  // Redirect authenticated users to dashboard
+  useEffect(() => {
+    if (!isLoading && user) {
+      const destination = user.is_management ? "/management/dashboard" : "/dashboard";
+      router.push(destination);
+    }
+  }, [user, isLoading, router]);
+
+  // Show loading or home page for non-authenticated users
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white">
       <Header />
