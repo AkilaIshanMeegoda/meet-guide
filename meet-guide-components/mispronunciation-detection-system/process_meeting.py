@@ -157,21 +157,6 @@ def main():
             sys.exit(1)
 
     # ----------------------------------------------------------------
-    # Step 1b — Whisper confidence scoring
-    #   Runs fine-tuned Whisper on each participant WAV, aligns output
-    #   to Deepgram words, and overwrites confidence scores in the JSON.
-    #   Deepgram timestamps (start, end) are never modified.
-    # ----------------------------------------------------------------
-    step1b = run_command(
-        [sys.executable, "whisper_confidence_scorer.py", meeting_folder],
-        "Step 1b/4: Scoring word confidence with fine-tuned Whisper"
-    )
-
-    if not step1b:
-        print("\n[!] Whisper confidence scoring had issues. "
-              "Deepgram confidence scores will be used as fallback.")
-
-    # ----------------------------------------------------------------
     # Step 2/4 — Sync corrections from global transcript
     # ----------------------------------------------------------------
     global_transcript = meeting_path / "global_transcript" / f"{meeting_folder}_speaker_attributed.txt"
@@ -191,8 +176,23 @@ def main():
         print("[!] No global transcript found, skipping sync")
 
     # ----------------------------------------------------------------
+    # Step 2b — Whisper confidence scoring
+    #   Runs fine-tuned Whisper on each participant WAV, aligns output
+    #   to Deepgram words, and overwrites confidence scores in the JSON.
+    #   Deepgram timestamps (start, end) are never modified.
+    # ----------------------------------------------------------------
+    step2b = run_command(
+        [sys.executable, "whisper_confidence_scorer.py", meeting_folder],
+        "Step 2b/4: Scoring word confidence with fine-tuned Whisper"
+    )
+
+    if not step2b:
+        print("\n[!] Whisper confidence scoring had issues. "
+              "Deepgram confidence scores will be used as fallback.")
+
+    # ----------------------------------------------------------------
     # Step 3/4 — Phoneme-based pronunciation detection
-    #   Uses the Whisper confidence scores written in Step 1b.
+    #   Uses the Whisper confidence scores written in Step 2b.
     # ----------------------------------------------------------------
     step3 = run_command(
         [sys.executable, "phoneme_pronunciation_detector.py", meeting_folder],

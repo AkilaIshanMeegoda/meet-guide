@@ -38,9 +38,9 @@ if sys.platform == 'win32':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # Confidence values assigned after alignment
-CONF_AGREE    = 0.92   # Both Deepgram and Whisper recognise the same word
-CONF_DISAGREE = 0.45   # Models disagree → word is likely mispronounced
-CONF_UNKNOWN  = 0.50   # No Whisper output available for comparison
+CONF_AGREE    = 0.80   
+CONF_DISAGREE = 0.70   
+CONF_UNKNOWN  = 0.50   
 
 
 def _normalize(word: str) -> str:
